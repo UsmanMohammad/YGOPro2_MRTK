@@ -338,7 +338,15 @@ public class Program : MonoBehaviour
 
         go(300, () =>
         {
-            UpdateClientV2();
+            try
+            {
+                UpdateClientV2();
+            }
+            catch
+            {
+                // TODO: I would like to log to the chat log but that doesn't get initalized till initializeALLservants
+                // book.add("Auto Update Failed...\nCheck your network connection and relaunch the game...");
+            }
             InterString.initialize("config/translation.conf");
             InterString.initialize("config" + AppLanguage.LanguageDir() + "/translation.conf");   //System Language
             GameTextureManager.initialize();
@@ -524,6 +532,9 @@ public class Program : MonoBehaviour
 
     private void UpdateClientV2()
     {
+        // TODO: I would like to log to the chat log but that doesn't get initalized till initializeALLservants
+        // book.add("Starting Auto Update...");
+
         if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1")))
         {
             try
@@ -532,10 +543,9 @@ public class Program : MonoBehaviour
                 while (!w.isDone)
                 {
                     if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(w.error))
-                    {
                         throw new Exception("No Internet connection!");
-                    }
                 }
+
                 List<ApiFile> toDownload = new List<ApiFile>();
                 List<ApiFile> apiFromGit = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<List<ApiFile>>(w.text);
 
@@ -549,8 +559,7 @@ public class Program : MonoBehaviour
                     {
                         toDownload.Add(file);
                     }
-                    else
-                    {
+                    else {
                         FileInfo f = new FileInfo((Path.GetExtension(s).ToLower() == ".cdb" ? "cdb/" : "config/") + s);
                         byte[] bytes1 = System.Text.Encoding.ASCII.GetBytes("blob " + f.Length.ToString() + '\0'.ToString());
                         byte[] bytes2 = File.ReadAllBytes((Path.GetExtension(s).ToLower() == ".cdb" ? "cdb/" : "config/") + s);
@@ -559,39 +568,30 @@ public class Program : MonoBehaviour
                         temp.AddRange(bytes2);
                         byte[] bytes = temp.ToArray();
                         string sha = GetHashString(GetHash(bytes)).ToLower(); ;
-                        if (sha != file.sha)
-                        {
-                            toDownload.Add(file);
-                        }
+                        if (sha != file.sha) toDownload.Add(file);
                     }
                 }
-                //foreach (string f in local)
-                //{
-                //    if (apiFromGit.FirstOrDefault(x => x.name == f) == null || f != apiFromGit.FirstOrDefault(x => x.name == f).name)
-                //    {
-                //        if (File.Exists("cdb/" + f))
-                //        {
-                //            File.Delete("cdb/" + f);
-                //        }
-                //        if (File.Exists("config/" + f))
-                //        {
-                //            File.Delete("config/" + f);
-                //        }
 
-                //    }
-                //}
+                // Deletes files that aren't in remote.
+                foreach (string f in local)
+                {
+                    if (apiFromGit.FirstOrDefault(x => x.name == f) == null || f != apiFromGit.FirstOrDefault(x => x.name == f).name)
+                    {
+                        if (File.Exists("cdb/" + f)) File.Delete("cdb/" + f);
+
+                        // This is disabled because config.conf is not in remote.
+                        // TODO: Find a better way to determine what files in remote 
+                        // if (File.Exists("config/" + f)) File.Delete("config/" + f);
+                    }
+                }
 
                 HttpDldFile httpDldFile = new HttpDldFile();
                 foreach (var dl in toDownload)
                 {
                     if (Path.GetExtension(dl.name) == ".cdb" && !(Application.internetReachability == NetworkReachability.NotReachable))
-                    {
                         httpDldFile.Download(dl.download_url, Path.Combine("cdb/", dl.name));
-                    }
                     if (Path.GetExtension(dl.name) == ".conf" && !(Application.internetReachability == NetworkReachability.NotReachable))
-                    {
                         httpDldFile.Download(dl.download_url, Path.Combine("config/", dl.name));
-                    }
                 }
             }
             catch (Exception e)
@@ -602,7 +602,6 @@ public class Program : MonoBehaviour
             {
                 CanvasControl.ChangeAlpha();
             }
-
         }
     }
 
@@ -1100,7 +1099,7 @@ public class Program : MonoBehaviour
         if (to == puzzleMode && puzzleMode.isShowed == false) puzzleMode.show();
         if (to == aiRoom && aiRoom.isShowed == false) aiRoom.show();
         if (to == roomList && !roomList.isShowed) roomList.show();
-
+        Program.I().bgm.PlayWhat();
     }
 
     #endregion

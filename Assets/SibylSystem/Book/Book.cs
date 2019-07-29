@@ -9,7 +9,7 @@ public class Book : WindowServant2D
     string kacha = "";
     string changcha = "";
     string xuecha = "";
-   
+
     lazyBookbtns texts;
     public override void initialize()
     {
@@ -24,10 +24,10 @@ public class Book : WindowServant2D
         applyHideArrangement();
     }
 
-    string formatS(string from, int c,bool k)
+    string formatS(string from, int c, bool k)
     {
-        string returnValue = "";    
-        if (k)  
+        string returnValue = "";
+        if (k)
         {
             return from + c.ToString();
         }
@@ -47,7 +47,7 @@ public class Book : WindowServant2D
         base.preFrameFunction();
         if (isShowed)
         {
-            gameObject.transform.position = Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Program.I().cardDescription.width / 2, (Screen.height-Program.I().cardDescription.cHeight) / 2, 0));
+            gameObject.transform.position = Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Program.I().cardDescription.width / 2, (Screen.height - Program.I().cardDescription.cHeight) / 2, 0));
             texts.back.width = (int)Program.I().cardDescription.width;
             texts.back.height = Screen.height - (int)Program.I().cardDescription.cHeight;
         }
@@ -85,15 +85,15 @@ public class Book : WindowServant2D
         realize();
     }
     public UILabel lab = null;
-    public UILabel labop = null;    
+    public UILabel labop = null;
 
     public string deckString = "";
-    public string opString = "";    
+    public string opString = "";
     public void realize()
     {
         MultiStringMaster master;
 
-        if (lab!=null)    
+        if (lab != null)
         {
             deckString = "";
             master = new MultiStringMaster();
@@ -168,7 +168,7 @@ public class Book : WindowServant2D
         int[] handCards = new int[2] { 0, 0 };
         int[] resourceCards = new int[2] { 0, 0 };
         bool died = false;
-        foreach (var item in Program.I().ocgcore.cards) 
+        foreach (var item in Program.I().ocgcore.cards)
         {
             if (item.p.location == (UInt32)CardLocation.Search)
             {
@@ -178,7 +178,7 @@ public class Book : WindowServant2D
             {
                 continue;
             }
-            for (int i = 0; i < 2; i++) 
+            for (int i = 0; i < 2; i++)
             {
                 if (item.p.controller == i)
                 {
@@ -200,7 +200,7 @@ public class Book : WindowServant2D
         if (!died)
         {
 
-            texts.lable.text =InterString.Get("消息记录")+"\n"+
+            texts.lable.text = InterString.Get("消息记录") + "\n" +
     formatS(kacha, (fieldCards[0] + handCards[0]) - (fieldCards[1] + handCards[1]), false) + " " +
     formatS(changcha, (fieldCards[0]) - (fieldCards[1]), false) + " " +
     formatS(xuecha,
@@ -210,8 +210,8 @@ public class Book : WindowServant2D
     Program.I().ocgcore.life_1 - Program.I().ocgcore.life_0
     :
     Program.I().ocgcore.life_0 - Program.I().ocgcore.life_1
-
     , false);
+            Program.I().bgm.PlayWhat();
         }
         string all = "";
         foreach (var item in lines)

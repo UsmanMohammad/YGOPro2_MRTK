@@ -1356,6 +1356,7 @@ public class Ocgcore : ServantWithCardDescription
                 lpLimit = life_0;
                 name_0_c = name_0;
                 name_1_c = name_1;
+                Program.I().bgm.PlayWhat();
                 if (Program.I().room.mode == 2)
                 {
                     if (isFirst)
@@ -1437,10 +1438,12 @@ public class Ocgcore : ServantWithCardDescription
                     if (player == 0)
                     {
                         life_0 = r.ReadInt32();
+                        Program.I().bgm.PlayWhat();
                     }
                     else
                     {
                         life_1 = r.ReadInt32();
+                        Program.I().bgm.PlayWhat();
                     }
                     for (int i = 0; i < 7; i++)
                     {
@@ -1704,10 +1707,12 @@ public class Ocgcore : ServantWithCardDescription
                 if (player == 0)
                 {
                     life_0 -= val;
+                    Program.I().bgm.PlayWhat();
                 }
                 else
                 {
                     life_1 -= val;
+                    Program.I().bgm.PlayWhat();
                 }
                 break;
             case GameMessage.PayLpCost:
@@ -1725,10 +1730,12 @@ public class Ocgcore : ServantWithCardDescription
                 if (player == 0)
                 {
                     life_0 -= val;
+                    Program.I().bgm.PlayWhat();
                 }
                 else
                 {
                     life_1 -= val;
+                    Program.I().bgm.PlayWhat();
                 }
                 break;
             case GameMessage.Recover:
@@ -1747,10 +1754,12 @@ public class Ocgcore : ServantWithCardDescription
                 if (player == 0)
                 {
                     life_0 += val;
+                    Program.I().bgm.PlayWhat();
                 }
                 else
                 {
                     life_1 += val;
+                    Program.I().bgm.PlayWhat();
                 }
                 break;
             case GameMessage.LpUpdate:
@@ -1768,10 +1777,12 @@ public class Ocgcore : ServantWithCardDescription
                 if (player == 0)
                 {
                     life_0 = val;
+                    Program.I().bgm.PlayWhat();
                 }
                 else
                 {
                     life_1 = val;
+                    Program.I().bgm.PlayWhat();
                 }
                 break;
             case GameMessage.RandomSelected:
