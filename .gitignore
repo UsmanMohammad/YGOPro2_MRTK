@@ -117,3 +117,6 @@ AI_core_vs2017solution/System.Servicemodel.Faltexception.dll
 /Assets/SibylSystem/ResourceManagers/RepoData.cs
 /updates/SHAs.txt
 /commamd.shell
+
+# macOS
+.DS_Store
