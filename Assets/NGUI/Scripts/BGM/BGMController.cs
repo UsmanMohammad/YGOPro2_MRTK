@@ -25,7 +25,7 @@ public class BGMController : MonoBehaviour
                 AudioClip add = Mp3Loader.LoadMp3(s);
                 audioClips.Add(add);
             }
-        }
+        } 
         advantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song-advantage.mp3");
         disAdvantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song-disadvantage.mp3");
         menuClip = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song.mp3");
@@ -49,7 +49,7 @@ public class BGMController : MonoBehaviour
 
     public void PlayWhat()
     {
-        if (Program.I().setting == null || Program.I().setting.isBGMMute.value)
+        if (audioSource == null || Program.I().setting == null || Program.I().setting.isBGMMute.value)
             return;
         if (Program.I().ocgcore != null && Program.I().ocgcore.isShowed)
         {
@@ -77,7 +77,7 @@ public class BGMController : MonoBehaviour
                     }
                 }
         }
-        else if (audioSource.clip != menuClip)
+        else if (audioSource.clip == null || audioSource.clip != menuClip)
             PlayAudioFile(0);
     }
 
