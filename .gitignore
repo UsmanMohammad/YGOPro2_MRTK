@@ -108,6 +108,7 @@ textures/
 cards.cdb
 lflist.conf
 strings.conf
+ygopro2.keystore
 AI_core_vs2017solution/core.VC.db
 AI_core_vs2017solution/core.VC.VC.opendb
 AI_core_vs2017solution/System.Servicemodel.Faltexception.dll
@@ -117,6 +118,3 @@ AI_core_vs2017solution/System.Servicemodel.Faltexception.dll
 /Assets/SibylSystem/ResourceManagers/RepoData.cs
 /updates/SHAs.txt
 /commamd.shell
-
-# macOS
-.DS_Store
