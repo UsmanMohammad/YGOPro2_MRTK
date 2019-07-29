@@ -276,47 +276,49 @@ public class Program : MonoBehaviour
 
     void initialize()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN //编译器、Windows
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN //Windows
         //Environment.CurrentDirectory = System.Windows.Forms.Application.StartupPath;
         //System.IO.Directory.SetCurrentDirectory(System.Windows.Forms.Application.StartupPath);
         string sdcardpath = " /storage/emulated/0/Android/data/<packagename>/files";
         sdcardpath = sdcardpath.Substring(0, sdcardpath.LastIndexOf("Android"));
 #elif UNITY_ANDROID //Android
-        //保持唤醒
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        //创建资源目录
-        DirectoryInfo gameDir = new DirectoryInfo(Application.persistentDataPath);
-        string sdcardpath = gameDir.FullName.Substring(0, gameDir.FullName.LastIndexOf("Android"));
-        if (!Directory.Exists(Path.Combine(sdcardpath, "ygocore/texture"))||!File.Exists(Path.Combine(sdcardpath,"ygocore/picture/null.png")))
-        {
-            string filePath = Application.streamingAssetsPath + "/ygocore.zip";
-            var www = new WWW(filePath);
-            while (!www.isDone) { }
-            byte[] bytes = www.bytes;
-            ExtractZipFile(bytes, sdcardpath);
-            DirPaths(Path.Combine(sdcardpath,"ygocore/cdb/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/config/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/deck/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/pack/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/updates/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/picture/card/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/picture/card-ani/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/picture/field/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/replay/"));
-            DirPaths(Path.Combine(sdcardpath,"0/ygocore/sound/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/texture/common/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/texture/face/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/texture/duel/healthBar/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/texture/duel/phase/"));
-            DirPaths(Path.Combine(sdcardpath,"ygocore/texture/ui/"));
-            File.Create(Path.Combine(sdcardpath,"ygocore/.nomedia"));
-            File.Create(Path.Combine(sdcardpath,"ygocore/picture/card/.nomedia"));
-            File.Create(Path.Combine(sdcardpath,"ygocore/picture/field/.nomedia"));
-            File.Create(Path.Combine(sdcardpath,"ygocore/picture/card-ani/.nomedia"));
-        }
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+		DirectoryInfo gameDir = new DirectoryInfo(Application.persistentDataPath);
+		string sdcardpath = gameDir.FullName.Substring(0, gameDir.FullName.LastIndexOf("Android"));
 
-        Environment.CurrentDirectory = Path.Combine(sdcardpath, "ygocore");
-        System.IO.Directory.SetCurrentDirectory(Path.Combine(sdcardpath, "ygocore"));
+		ZipFile zipFile = null;
+
+		try {
+			string zipPath = Application.streamingAssetsPath + "/ygocore.zip";
+			var zipFetch = new WWW(zipPath);
+			while (!zipFetch.isDone) {}
+			MemoryStream zipMem = new MemoryStream(zipFetch.bytes);
+			zipFile = new ZipFile(zipMem);
+
+			foreach (ZipEntry zipEntry in zipFile) {
+				if (!zipEntry.IsFile) continue;
+
+				String extractFileTo = Path.Combine(sdcardpath, zipEntry.Name);
+				if (!File.Exists(extractFileTo)) {
+					byte[] buffer = new byte[4096];     
+					Stream zipStream = zipFile.GetInputStream(zipEntry);
+
+					DirCreatePaths(Path.Combine(sdcardpath, extractFileTo));
+					using (FileStream streamWriter = File.Create(extractFileTo))
+						StreamUtils.Copy(zipStream, streamWriter, buffer);
+				}
+			}
+		} catch(Exception err) {
+			throw err;
+		} finally {
+			if (zipFile != null) {
+				zipFile.IsStreamOwner = true;
+				zipFile.Close();
+			}
+		}
+
+		Environment.CurrentDirectory = Path.Combine(sdcardpath, "ygocore");
+		System.IO.Directory.SetCurrentDirectory(Path.Combine(sdcardpath, "ygocore"));
 #elif UNITY_IOS //iPhone
             if (!Directory.Exists(Application.persistentDataPath + "/ygocore/texture")||!File.Exists(Application.persistentDataPath + "/ygocore/picture/null.png"))
             {
@@ -1275,7 +1277,7 @@ public class Program : MonoBehaviour
     #endregion
 
     //递归创建目录
-    private static void DirPaths(string filefullpath)
+	private static void DirCreatePaths(string filefullpath)
     {
         if (!File.Exists(filefullpath))
         {
