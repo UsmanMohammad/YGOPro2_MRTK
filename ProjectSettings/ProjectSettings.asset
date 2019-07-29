@@ -127,7 +127,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.034.8
+  bundleVersion: 1.034.9
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -232,7 +232,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: ygopro.jks
+  AndroidKeystoreName: ygopro2.keystore
   AndroidKeyaliasName: 
   AndroidTVCompatibility: 0
   AndroidIsGame: 0
