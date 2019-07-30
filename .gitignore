@@ -89,6 +89,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Temp/
+ygopro2
 ygopro2.keystore
 ygopro.jks
 AI_core_vs2017solution/bin/
