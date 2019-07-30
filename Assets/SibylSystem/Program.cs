@@ -287,7 +287,6 @@ public class Program : MonoBehaviour
 		string sdcardpath = gameDir.FullName.Substring(0, gameDir.FullName.LastIndexOf("Android"));
 
 		ZipFile zipFile = null;
-
 		try {
 			string zipPath = Application.streamingAssetsPath + "/ygocore.zip";
 			var zipFetch = new WWW(zipPath);
@@ -340,6 +339,7 @@ public class Program : MonoBehaviour
 
         go(300, () =>
         {
+            Config.initialize("config/config.conf");
             try
             {
                 UpdateClientV2();
@@ -352,7 +352,6 @@ public class Program : MonoBehaviour
             InterString.initialize("config/translation.conf");
             InterString.initialize("config" + AppLanguage.LanguageDir() + "/translation.conf");   //System Language
             GameTextureManager.initialize();
-            Config.initialize("config/config.conf");
             GameStringManager.initialize("config/strings.conf");
             if (File.Exists("config/strings.conf"))
             {
