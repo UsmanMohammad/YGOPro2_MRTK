@@ -288,8 +288,8 @@ public class Program : MonoBehaviour
 			});
 		go(300, () =>
 			{
-				Config.initialize("config/config.conf");
-				try { 
+                Config.initialize("config/config.conf");
+                try { 
 					UpdateClientV2();
 				} catch {
 					// TODO: I would like to log to the chat log but that doesn't get initalized till initializeALLservants
@@ -298,8 +298,7 @@ public class Program : MonoBehaviour
 
 				InterString.initialize("config/translation.conf");
 				InterString.initialize("config" + AppLanguage.LanguageDir() + "/translation.conf");   //System Language
-				GameTextureManager.initialize();
-
+				GameTextureManager.initialize();	
 				GameStringManager.initialize("config/strings.conf");
 				if (File.Exists("config/strings.conf"))
 				{
