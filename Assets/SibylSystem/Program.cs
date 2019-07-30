@@ -288,6 +288,7 @@ public class Program : MonoBehaviour
 			});
 		go(300, () =>
 			{
+				Config.initialize("config/config.conf");
 				try { 
 					UpdateClientV2();
 				} catch {
@@ -298,7 +299,6 @@ public class Program : MonoBehaviour
 				InterString.initialize("config/translation.conf");
 				InterString.initialize("config" + AppLanguage.LanguageDir() + "/translation.conf");   //System Language
 				GameTextureManager.initialize();
-				Config.initialize("config/config.conf");
 
 				GameStringManager.initialize("config/strings.conf");
 				if (File.Exists("config/strings.conf"))
