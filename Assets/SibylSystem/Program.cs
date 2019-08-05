@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -295,15 +295,12 @@ public class Program : MonoBehaviour
                 servants.Add(backGroundPic);
                 backGroundPic.fixScreenProblem();
             });
-        go(300, () =>
-            {
+        go(300, () => {
                 Config.initialize("config/config.conf");
-                try
-                {
-                    UpdateClientV3();
-                }
-                catch
-                {
+                try {
+                    UpdateClientV3("cdb/", cdbID);
+                    UpdateClientV3("config/", configID);
+                } catch {
                     // TODO: I would like to log to the chat log but that doesn't get initalized till initializeALLservants
                     // book.add("Auto Update Failed...\nCheck your network connection and relaunch the game...");
                 }
@@ -313,46 +310,35 @@ public class Program : MonoBehaviour
                 GameTextureManager.initialize();
                 GameStringManager.initialize("config/strings.conf");
                 if (File.Exists("config/strings.conf"))
-                {
                     GameStringManager.initialize("config/strings.conf");
-                }
+
                 if (File.Exists("expansions/strings.conf"))
-                {
                     GameStringManager.initialize("expansions/strings.conf");
-                }
+
                 YGOSharp.BanlistManager.initialize("config/lflist.conf");
                 if (File.Exists("expansions/lflist.conf"))
-                {
                     YGOSharp.BanlistManager.initialize("expansions/lflist.conf");
-                }
+
                 FileInfo[] fileInfos;
                 if (Directory.Exists("expansions"))
-                {
                     fileInfos = (new DirectoryInfo("expansions")).GetFiles().Where(x => x.Extension == ".cdb").OrderBy(x => x.Name).ToArray();
                     if (Directory.Exists("expansions" + AppLanguage.LanguageDir()))
-                    {
-
                         fileInfos = (new DirectoryInfo("expansions" + AppLanguage.LanguageDir())).GetFiles().Where(x => x.Extension == ".cdb").OrderBy(x => x.Name).ToArray();
-                    }
-                    for (int i = 0; i < fileInfos.Length; i++)
-                    {
-                        if (fileInfos[i].Name.Length > 4)
-                        {
-                            if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb")
-                            {
+                    
+                    for (int i = 0; i < fileInfos.Length; i++) {
+                        if (fileInfos[i].Name.Length > 4) {
+                            if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb") {
                                 YGOSharp.CardsManager.initialize("expansions/" + fileInfos[i].Name);
                                 YGOSharp.CardsManager.initialize("expansions" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);
                             }
                         }
                     }
                 }
+
                 fileInfos = (new DirectoryInfo("cdb")).GetFiles().OrderByDescending(x => x.Name).ToArray();
-                for (int i = 0; i < fileInfos.Length; i++)
-                {
-                    if (fileInfos[i].Name.Length > 4)
-                    {
-                        if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb")
-                        {
+                for (int i = 0; i < fileInfos.Length; i++) {
+                    if (fileInfos[i].Name.Length > 4) {
+                        if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb") {
                             YGOSharp.CardsManager.initialize("cdb/" + fileInfos[i].Name);
                             YGOSharp.CardsManager.initialize("cdb" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);//System Language
                         }
@@ -361,159 +347,47 @@ public class Program : MonoBehaviour
 
                 fileInfos = (new DirectoryInfo("pack")).GetFiles();
                 fileInfos = (new DirectoryInfo("pack" + AppLanguage.LanguageDir())).GetFiles();
-                for (int i = 0; i < fileInfos.Length; i++)
-                {
-                    if (fileInfos[i].Name.Length > 3)
-                    {
-                        if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 3, 3) == ".db")
-                        {
+                for (int i = 0; i < fileInfos.Length; i++) {
+                    if (fileInfos[i].Name.Length > 3) {
+                        if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 3, 3) == ".db") {
                             YGOSharp.PacksManager.initialize("pack/" + fileInfos[i].Name);
                             YGOSharp.PacksManager.initialize("pack" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);
                         }
                     }
                 }
+
                 YGOSharp.PacksManager.initializeSec();
                 initializeALLservants();
                 loadResources();
             });
     }
 
-    private void UpdateClientV2()
-    {
-        // TODO: I would like to log to the chat log but that doesn't get initalized till initializeALLservants
-        // book.add("Starting Auto Update...");
+    private void UpdateClientV3(string path, string id) {
+        if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1"))) {
+            List<GitLabFile> remoteFiles = FindDownloadFiles(id, "/");
 
-        if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1")))
-        {
-            try
-            {
-                List<ApiFile> toDownload = new List<ApiFile>();
-                WWW wConfig = new WWW("https://gitlab.com/api/v4/projects/13635058/repository/files/strings.conf?ref=master");
-                while (!wConfig.isDone)
-                {
-                    if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(wConfig.error))
-                        throw new Exception("No Internet connection!");
-                }
-                WWW wCdb = new WWW("https://gitlab.com/api/v4/projects/13635057/repository/tree");
-                while (!wCdb.isDone)
-                {
-                    if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(wCdb.error))
-                        throw new Exception("No Internet connection!");
-                }
+            foreach (GitLabFile file in remoteFiles) {
+                if (Application.internetReachability == NetworkReachability.NotReachable)
+                    throw new Exception();
 
-                ApiFile configFromGit = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<ApiFile>(wConfig.text);
-                List<ApiFile> cdbFromGit = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<List<ApiFile>>(wCdb.text);
-                List<ApiFile> apiFromGit = new List<ApiFile>();
-                apiFromGit.Add(configFromGit);
-                apiFromGit.AddRange(cdbFromGit);
-                List<string> local = new List<string>();
-                local.AddRange(new DirectoryInfo("config/").GetFiles("*.conf").Select(x => x.Name).ToList());
-                local.AddRange(new DirectoryInfo("cdb/").GetFiles("*.cdb").Select(x => x.Name).ToList());
-                foreach (ApiFile file in apiFromGit)
-                {
-                    //if (file.type != "file")
-                    //    continue;
-                    string s = local.FirstOrDefault(x => x == file.file_name);
-                    if (s == null)
-                    {
-                        toDownload.Add(file);
-                    }
-                    else {
-                        FileInfo f = new FileInfo((Path.GetExtension(s).ToLower() == ".cdb" ? "cdb/" : "config/") + s);
-                        byte[] bytes1 = System.Text.Encoding.ASCII.GetBytes("blob " + f.Length.ToString() + '\0'.ToString());
-                        byte[] bytes2 = File.ReadAllBytes((Path.GetExtension(s).ToLower() == ".cdb" ? "cdb/" : "config/") + s);
-                        List<byte> temp = new List<byte>();
-                        temp.AddRange(bytes1);
-                        temp.AddRange(bytes2);
-                        byte[] bytes = temp.ToArray();
-                        string sha = GetHashString(GetHash(bytes)).ToLower();
-                        if (sha != file.content_sha256) toDownload.Add(file);
-                    }
-                }
+                byte[] bytes = Convert.FromBase64String(file.content);
+                string path = Path.Combine(Path.GetExtension(path, file.file_path);
+                string d= path.Substring(0, path.LastIndexOf('/'));
+                if (!Directory.Exists(d)) Directory.CreateDirectory(d);
+                File.WriteAllBytes(path, bytes);
+            }
 
-                // Deletes files that aren't in remote.
-                foreach (string f in local)
-                {
-                    if (apiFromGit.FirstOrDefault(x => x.file_name == f) == null || f != apiFromGit.FirstOrDefault(x => x.file_name == f).file_name)
-                    {
-                        if (f.Contains("config.conf"))
-                            continue;
-                        if (File.Exists("cdb/" + f)) File.Delete("cdb/" + f);
+            //Delete files that do not exist expect for config.conf
+            List<FileInfo> locallFiles = new List<FileInfo>();
+            localFiles.AddRange(new DirectoryInfo(path).GetFiles("*.conf", SearchOption.AllDirectories).ToList());
 
-                        // This is disabled because config.conf is not in remote.
-                        // TODO: Find a better way to determine what files in remote 
-                        if (File.Exists("config/" + f)) File.Delete("config/" + f);
-                    }
-                }
-
-                HttpDldFile httpDldFile = new HttpDldFile();
-                foreach (var dl in toDownload)
-                {
-                    if (Path.GetExtension(dl.file_name) == ".cdb" && !(Application.internetReachability == NetworkReachability.NotReachable))
-                        httpDldFile.Download(dl.file_path, Path.Combine("cdb/", dl.file_name));
-                    if (Path.GetExtension(dl.file_name) == ".conf" && !(Application.internetReachability == NetworkReachability.NotReachable))
-                        httpDldFile.Download(dl.file_path, Path.Combine("config/", dl.file_name));
+            foreach (FileInfo f in localFiles) {
+                if (f.Name.Contains("config.conf"))
+                    continue;
+                if (toDownload.FirstOrDefault(file => f.FullName.Replace("\\", "/").Contains(file.file_path)) == null) {
+                    if (File.Exists(f.FullName)) File.Delete(f.FullName);
                 }
             }
-            catch (Exception e)
-            {
-                throw new Exception("Update Error");
-            }
-        }
-    }
-
-    private void UpdateClientV3()
-    {
-
-        if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1")))
-        {
-            try
-            {
-                List<ApiFile> apiFiles = null;
-                GetApiFilesFromTree(ref apiFiles, configID);
-                GetApiFilesFromTree(ref apiFiles, cdbID);
-                List<FileInfo> local = new List<FileInfo>();
-                local.AddRange(new DirectoryInfo("config/").GetFiles("*.conf", SearchOption.AllDirectories).ToList());
-                local.AddRange(new DirectoryInfo("cdb/").GetFiles("*.cdb", SearchOption.AllDirectories).ToList());
-                List<ApiFile> toDownload = new List<ApiFile>();
-                foreach (ApiFile file in apiFiles)
-                {
-                    if (local.FirstOrDefault(localF => localF.FullName.Replace("\\", "/").Contains(file.file_path)) == null)
-                        toDownload.Add(file);
-                    else
-                    {
-                        string localSha = BytesToString(GetHashSha256(local.FirstOrDefault(localF => localF.FullName.Replace("\\", "/").Contains(file.file_path)).FullName));
-                        if (localSha != file.content_sha256)
-                        {
-                            toDownload.Add(file);
-                        }
-                    }
-                }
-                foreach (FileInfo f in local)
-                {
-                    if (f.Name.Contains("config.conf"))
-                        continue;
-                    if (apiFiles.FirstOrDefault(file => f.FullName.Replace("\\", "/").Contains(file.file_path)) == null)
-                    {
-                        if (File.Exists(f.FullName)) File.Delete(f.FullName);
-                    }
-                }
-                foreach (ApiFile file in toDownload)
-                {
-                    if (Application.internetReachability == NetworkReachability.NotReachable)
-                        throw new Exception();
-                    byte[] bytes = Convert.FromBase64String(file.content);
-                    string path = Path.Combine(Path.GetExtension(file.file_path) == ".cdb" ? "cdb/" : "config/", file.file_path);
-                    string d= path.Substring(0, path.LastIndexOf('/'));
-                    if (!Directory.Exists(d))
-                    {
-                        Directory.CreateDirectory(d);
-                    }            
-                    File.WriteAllBytes(path, bytes);
-
-                }
-            }
-            catch (Exception e) { throw new Exception(e.Message); }
         }
 
     }
@@ -542,71 +416,41 @@ public class Program : MonoBehaviour
     #endregion
 
     #region Tools
-    private List<ApiTree> RequestTreeFromGit(string id, string fileName = "", string branch = "master")
-    {
-        WWW request = new WWW(string.Format("https://gitlab.com/api/v4/projects/{0}/repository/tree?{1}ref={2}", id, fileName != "" ? "path=" + fileName + "&" : "", branch));
-        while (!request.isDone)
-        {
-            if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
-                throw new Exception("No Internet connection!");
-        }
-        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-        serializer.MaxJsonLength = int.MaxValue;
-        return serializer.Deserialize<List<ApiTree>>(request.text);
-    }
+    private List<GitLabFile> FindDownloadFiles(string id, string path, string branch = "master") {
+        List<GitLabFile> filesToDownlaod = new List<string>;
 
-    private ApiFile RequestFilesFromGit(string id, string filePath, string branch = "master")
-    {
-        string encodedPath = WWW.EscapeURL(filePath);
-        WWW request = new WWW(string.Format("https://gitlab.com/api/v4/projects/{0}/repository/files/{1}?ref={2}", id, encodedPath, branch));
-        while (!request.isDone)
-        {
-            if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
-                throw new Exception("No Internet connection!");
-        }
-        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-        serializer.MaxJsonLength = int.MaxValue;
-        return serializer.Deserialize<ApiFile>(request.text);
-    }
+        string url = string.Format("https://gitlab.com/api/v4/projects/{0}/repository/tree?path={1}&ref={2}", id, path, branch);
+        GitLabFile dir = RequestFromGit(url);
 
-    private void GetApiFilesFromTree(ref List<ApiFile> list, string id, string branch = "master", string filename = "")
-    {
-        if (list == null)
-            list = new List<ApiFile>();
-        try
-        {
-            List<ApiTree> req = RequestTreeFromGit(id, fileName: filename, branch: branch);
-            foreach (ApiTree dir in req)
-            {
-                if (dir.type == "tree")
-                    GetApiFilesFromTree(ref list, id: id, branch: branch, filename: dir.path);
-                else
-                {
-                    list.Add(RequestFilesFromGit(id, dir.path, branch: branch));
-                }
+        foreach (file in dir) {
+            if (file.type == "tree")
+                list.Add(FindDownloadFiles(id, file.path, branch))
+            else if (file.id != GetLocalSHA(Path.combine(file.id)) ){
+                string encodedName = WWW.EscapeURL(file.path);
+                string url = string.Format("https://gitlab.com/api/v4/projects/${0}/repository/files/${1}?ref=${2}",
+                    id, encodedName, branch);
+                filesToDownlaod.Add(RequestFromGit(url));
             }
         }
-        catch (Exception e)
-        {
-            throw new Exception(e.Message);
-        }
+
+        return filesToDownlaod;
     }
 
-    private byte[] GetHashSha256(string filename)
-    {
-        SHA256 Sha256 = SHA256.Create();
-        using (FileStream stream = File.OpenRead(filename))
-        {
-            return Sha256.ComputeHash(stream);
+    private GitLabFile RequestFromGit(string url) {
+        WWW request = new WWW(url);
+        while (!request.isDone) {
+            if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
+                throw new Exception("No Internet connection!");
         }
+
+        System.Web.Script.Serialization.JavaScriptSerializer serializer =
+            new System.Web.Script.Serialization.JavaScriptSerializer();
+
+        serializer.MaxJsonLength = int.MaxValue;
+        return serializer.Deserialize<GitLabFile>(request.text);
     }
 
-    public static string BytesToString(byte[] bytes)
-    {
-        string result = "";
-        foreach (byte b in bytes) result += b.ToString("x2");
-        return result;
-    }
+    private byte[] GetLocalSHA(string file) {}
 
     public static GameObject pointedGameObject = null;
 
@@ -625,21 +469,6 @@ public class Program : MonoBehaviour
     public static bool InputEnterDown = false;
 
     public static float wheelValue = 0;
-
-    public static byte[] GetHash(byte[] inputString)
-    {
-        System.Security.Cryptography.HashAlgorithm algorithm = System.Security.Cryptography.SHA1.Create();
-        return algorithm.ComputeHash(inputString);
-    }
-
-    public static string GetHashString(byte[] inputString)
-    {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        foreach (byte b in inputString)
-            sb.Append(b.ToString("X2"));
-
-        return sb.ToString();
-    }
 
     public class delayedTask
     {
