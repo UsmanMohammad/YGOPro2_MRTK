@@ -300,7 +300,8 @@ public class Program : MonoBehaviour
                 Config.initialize("config/config.conf");
                 try
                 {
-                    UpdateClientV4();
+                    UpdateClientV4("cdb/", cdbID);
+                    UpdateClientV4("config/", configID);
                 }
                 catch
                 {
@@ -378,7 +379,7 @@ public class Program : MonoBehaviour
             });
     }
 
-    private void UpdateClientV4()
+    private void UpdateClientV4(string path, string id)
     {
 
         if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1")))
@@ -387,12 +388,11 @@ public class Program : MonoBehaviour
             {
                 //Getting the repoistories "tree" containg each file's SHA-1 for quicker check then downloading all files.
                 List<ApiTree> apiTrees = null;
-                GetApiTreeFromTree(ref apiTrees, configID);
-                GetApiTreeFromTree(ref apiTrees, cdbID);
+                GetApiTreeFromTree(ref apiTrees, id);
                 List<FileInfo> local = new List<FileInfo>();
-                local.AddRange(new DirectoryInfo("config/").GetFiles("*.conf", SearchOption.AllDirectories).ToList());
-                local.AddRange(new DirectoryInfo("cdb/").GetFiles("*.cdb", SearchOption.AllDirectories).ToList());
+                local.AddRange(new DirectoryInfo(path).GetFiles(SearchOption.AllDirectories).ToList());
                 List<ApiTree> toDownload = new List<ApiTree>();
+                
                 //Checking which local file doesnt appear on the list, or if it does if it has a different SHA then the remote one
                 foreach (ApiTree file in apiTrees)
                 {
@@ -408,6 +408,7 @@ public class Program : MonoBehaviour
                             toDownload.Add(file);
                     }
                 }
+
                 //Delete local files that does not appear on remote tree except config.conf files
                 foreach (FileInfo f in local)
                 {
@@ -419,6 +420,7 @@ public class Program : MonoBehaviour
                         if (File.Exists(f.FullName)) File.Delete(f.FullName);
                     }
                 }
+
                 //Download all files that either didnt exsist localy on the tree, or had a diffrent SHA then their remote counterpart
                 foreach (ApiTree treeF in toDownload)
                 {
@@ -426,19 +428,9 @@ public class Program : MonoBehaviour
                         throw new Exception("Internet error");
                     if (treeF.type == "tree")
                         continue;
-                    string id = "";
-                    string path = "";
                     //In the future more folder can or extensions can be added
-                    if (treeF.path.Contains("conifg/") || treeF.path.Contains(".conf"))
-                    {
-                        id = configID;
-                        path = "config/" + treeF.path;
-                    }
-                    else if (treeF.path.Contains("cdb/") || treeF.path.Contains(".cdb"))
-                    {
-                        id = cdbID;
-                        path = "cdb/" + treeF.path;
-                    }
+                    path += treeF.path;
+
                     ApiFile file = RequestFilesFromGit(id, treeF.path);
                     byte[] bytes = Convert.FromBase64String(file.content);
                     //Make sure path does have /
