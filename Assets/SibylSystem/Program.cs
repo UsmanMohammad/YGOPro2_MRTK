@@ -163,16 +163,12 @@ public class Program : MonoBehaviour
             servants.Add(backGroundPic);
             backGroundPic.fixScreenProblem();
         });
-        go(300, () =>
-        {
+        go(300, () => {
             Config.initialize("config/config.conf");
-            try
-            {
+            try {
                 UpdateClient("cdb/", cdbID);
                 UpdateClient("config/", configID);
-            }
-            catch
-            {
+            } catch {
                 // TODO: I would like to log to the chat log but that doesn't get initalized till initializeALLservants
                 // book.add("Auto Update Failed...\nCheck your network connection and relaunch the game...");
             }
@@ -182,46 +178,35 @@ public class Program : MonoBehaviour
             GameTextureManager.initialize();
             GameStringManager.initialize("config/strings.conf");
             if (File.Exists("config/strings.conf"))
-            {
                 GameStringManager.initialize("config/strings.conf");
-            }
+
             if (File.Exists("expansions/strings.conf"))
-            {
                 GameStringManager.initialize("expansions/strings.conf");
-            }
+
             YGOSharp.BanlistManager.initialize("config/lflist.conf");
             if (File.Exists("expansions/lflist.conf"))
-            {
                 YGOSharp.BanlistManager.initialize("expansions/lflist.conf");
-            }
             FileInfo[] fileInfos;
-            if (Directory.Exists("expansions"))
-            {
+
+            if (Directory.Exists("expansions")) {
                 fileInfos = (new DirectoryInfo("expansions")).GetFiles().Where(x => x.Extension == ".cdb").OrderBy(x => x.Name).ToArray();
                 if (Directory.Exists("expansions" + AppLanguage.LanguageDir()))
-                {
-
                     fileInfos = (new DirectoryInfo("expansions" + AppLanguage.LanguageDir())).GetFiles().Where(x => x.Extension == ".cdb").OrderBy(x => x.Name).ToArray();
-                }
-                for (int i = 0; i < fileInfos.Length; i++)
-                {
-                    if (fileInfos[i].Name.Length > 4)
-                    {
-                        if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb")
-                        {
+                
+                for (int i = 0; i < fileInfos.Length; i++) {
+                    if (fileInfos[i].Name.Length > 4) {
+                        if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb") {
                             YGOSharp.CardsManager.initialize("expansions/" + fileInfos[i].Name);
                             YGOSharp.CardsManager.initialize("expansions" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);
                         }
                     }
                 }
             }
+
             fileInfos = (new DirectoryInfo("cdb")).GetFiles().OrderByDescending(x => x.Name).ToArray();
-            for (int i = 0; i < fileInfos.Length; i++)
-            {
-                if (fileInfos[i].Name.Length > 4)
-                {
-                    if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb")
-                    {
+            for (int i = 0; i < fileInfos.Length; i++) {
+                if (fileInfos[i].Name.Length > 4) {
+                    if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb") {
                         YGOSharp.CardsManager.initialize("cdb/" + fileInfos[i].Name);
                         YGOSharp.CardsManager.initialize("cdb" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);//System Language
                     }
@@ -230,10 +215,8 @@ public class Program : MonoBehaviour
 
             fileInfos = (new DirectoryInfo("pack")).GetFiles();
             fileInfos = (new DirectoryInfo("pack" + AppLanguage.LanguageDir())).GetFiles();
-            for (int i = 0; i < fileInfos.Length; i++)
-            {
-                if (fileInfos[i].Name.Length > 3)
-                {
+            for (int i = 0; i < fileInfos.Length; i++) {
+                if (fileInfos[i].Name.Length > 3) {
                     if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 3, 3) == ".db")
                     {
                         YGOSharp.PacksManager.initialize("pack/" + fileInfos[i].Name);
@@ -241,48 +224,25 @@ public class Program : MonoBehaviour
                     }
                 }
             }
+            
             YGOSharp.PacksManager.initializeSec();
             initializeALLservants();
             loadResources();
         });
     }
 
-    private void UpdateClient(string path, string id)
-    {
-
-        if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1")))
-        {
-            try
-            {
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                //Getting the repoistories "tree" containg each file's SHA-1 for quicker check then downloading all files.
-                List<ApiTree> toDownload = GetApiTreeFromTree(id, localPath: path);
-                //Download all files that either didnt exsist localy on the tree, or had a diffrent SHA then their remote counterpart
-                foreach (ApiTree treeF in toDownload)
-                {
-                    if (Application.internetReachability == NetworkReachability.NotReachable)
-                        throw new Exception("Internet error");
+    private void UpdateClient(string path, string id) {
+        if (UIHelper.fromStringToBool(Config.Get("autoUpdateDownload_", "1"))) {
+            try {
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);              
+                List<ApiTree> toDownload = GetFilesToDownload(id, localPath: path);
+                foreach (ApiTree file in toDownload) {                    
                     //In the future more folder can or extensions can be added
-                    string writePath = path + treeF.path;
-
-                    ApiFile file = RequestFilesFromGit(id, treeF.path);
-                    byte[] bytes = Convert.FromBase64String(file.content);
-                    //Make sure path does have /
-                    string d = writePath.Substring(0, writePath.LastIndexOf('/'));
-                    if (!Directory.Exists(d))
-                    {
-                        Directory.CreateDirectory(d);
-                    }
-                    File.WriteAllBytes(writePath, bytes);
-
+                    DownloadGitFile(id , Path.combine(path + file.path));
                 }
             }
             catch (Exception e) { Program.DEBUGLOG("Update Error"); }
         }
-
     }
 
     private static Program instance;
@@ -443,25 +403,22 @@ public class Program : MonoBehaviour
     #endregion
 
     #region Tools
-    private List<ApiTree> RequestTreeFromGit(string id, string fileName = "", string branch = "master")
-    {
+    private List<ApiTree> RequestTreeFromGit(string id, string fileName = "", string branch = "master") {
         WWW request = new WWW(string.Format("https://gitlab.com/api/v4/projects/{0}/repository/tree?{1}ref={2}", id, fileName != "" ? "path=" + fileName + "&" : "", branch));
-        while (!request.isDone)
-        {
+        while (!request.isDone) {
             if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
                 throw new Exception("No Internet connection!");
         }
+
         System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         serializer.MaxJsonLength = int.MaxValue;
         return serializer.Deserialize<List<ApiTree>>(request.text);
     }
 
-    private ApiFile RequestFilesFromGit(string id, string filePath, string branch = "master")
-    {
+    private ApiFile RequestFilesFromGit(string id, string filePath, string branch = "master") {
         string encodedPath = WWW.EscapeURL(filePath);
         WWW request = new WWW(string.Format("https://gitlab.com/api/v4/projects/{0}/repository/files/{1}?ref={2}", id, encodedPath, branch));
-        while (!request.isDone)
-        {
+        while (!request.isDone) {
             if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
                 throw new Exception("No Internet connection!");
         }
@@ -470,52 +427,34 @@ public class Program : MonoBehaviour
         return serializer.Deserialize<ApiFile>(request.text);
     }
 
-    private void GetApiFilesFromTree(ref List<ApiFile> list, string id, string branch = "master", string fileName = "")
-    {
-        if (list == null)
-            list = new List<ApiFile>();
-        try
-        {
-            List<ApiTree> req = RequestTreeFromGit(id, fileName: fileName, branch: branch);
-            foreach (ApiTree dir in req)
-            {
-                if (dir.type == "tree")
-                    GetApiFilesFromTree(ref list, id: id, branch: branch, fileName: dir.path);
-                else
-                {
-                    list.Add(RequestFilesFromGit(id, dir.path, branch: branch));
+
+    private List<ApiTree> GetFilesToDownload(string id, string branch = "master", string filename = "", string localPath = null) {
+        List<ApiTree> toDownload = new List<ApiTree>();
+        try {
+            List<ApiTree> dir = RequestTreeFromGit(id, fileName: filename, branch: branch);
+            foreach (ApiTree file in dir) {
+                if (file.type == "tree")
+                    toDownload.AddRange(GetApiTreeFromTree(id: id, branch: branch, filename: file.path));
+
+               //Getting the repoistories "tree" containg each file's SHA-1 for quicker check then downloading all files.
+                else if (localPath == null || file.id != GetHashString(Path.Combine(localPath, file.path)).ToLower()) {
+                    toDownload.Add(file);
                 }
+
             }
+            return toDownload;    
         }
-        catch (Exception e)
-        {
-            throw new Exception(e.Message);
-        }
+        catch (Exception e) { Program.DEBUGLOG("ApiTree get error"); return new List<ApiTree>(); }
     }
 
-    private List<ApiTree> GetApiTreeFromTree(string id, string branch = "master", string filename = "", string localPath = null)
-    {
-        List<ApiTree> ret = new List<ApiTree>();
-        try
-        {
-            List<ApiTree> req = RequestTreeFromGit(id, fileName: filename, branch: branch);
-            foreach (ApiTree dir in req)
-            {
-                if (dir.type == "tree")
-                    ret.AddRange(GetApiTreeFromTree(id: id, branch: branch, filename: dir.path));
-                else if (localPath == null || dir.id != GetHashString(Path.Combine(localPath, dir.path)).ToLower())
-                {
-                    ret.Add(dir);
-                }
-
-            }
-        }
-        catch (Exception e)
-        {
-            Program.DEBUGLOG("ApiTree get error");
-        }
-        return ret;
-
+    private void DownloadGitFile(string id, string path) {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+            throw new Exception("Internet error");
+        ApiFile file = RequestFilesFromGit(id, path);
+        byte[] bytes = Convert.FromBase64String(file.content);
+        string dir = writePath.Substring(0, writePath.LastIndexOf('/'));
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(d);
+        File.WriteAllBytes(writePath, bytes);
     }
 
     public static GameObject pointedGameObject = null;
