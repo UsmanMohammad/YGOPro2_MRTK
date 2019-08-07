@@ -252,13 +252,12 @@ public class Program : MonoBehaviour
         {
             try
             {
-                List<ApiTree> remoteFiles = GetRemoteFiles(id, path);
+                List<GitNode> remoteFiles = GetRemoteFiles(id, path);
                 DeleteUneeded(path, remoteFiles);
-                List<ApiTree> toDownload = remoteFiles.Where(remote => !remote.matchesLocal).ToList();
-                foreach (ApiTree tree in toDownload)
+                List<GitNode> toDownload = remoteFiles.Where(remote => !remote.matches_local).ToList();
+                foreach (GitNode file in toDownload)
                 {
-                    string dPath = DownloadGitFile(id, tree.path, path);
-                    localSha.UpdateInsertCache(dPath, ShaCache.GetHashString(dPath));
+                    DownloadGitFile(id, file, path);
                 }
             }
             catch (Exception e) { Program.DEBUGLOG("Update Error"); }
@@ -423,7 +422,7 @@ public class Program : MonoBehaviour
     #endregion
 
     #region Tools
-    private void DeleteUneeded(string path, List<ApiTree> remoteFiles)
+    private void DeleteUneeded(string path, List<GitNode> remoteFiles)
     {
         if (remoteFiles.Count == 0)
             return;
@@ -442,9 +441,9 @@ public class Program : MonoBehaviour
     {
         string encodedPath = WWW.EscapeURL(path);
         string url = "";
-        if (typeof(T) == typeof(ApiFile))
+        if (typeof(T) == typeof(GitFile))
             url = string.Format("https://gitlab.com/api/v4/projects/{0}/repository/files/{1}?ref={2}", id, encodedPath, branch);
-        if (typeof(T) == typeof(List<ApiTree>))
+        if (typeof(T) == typeof(List<GitNode>))
             url = string.Format("https://gitlab.com/api/v4/projects/{0}/repository/tree?{1}ref={2}", id, path != "" ? "path=" + encodedPath + "&" : "", branch);
         WWW request = new WWW(url);
         while (!request.isDone)
@@ -458,38 +457,38 @@ public class Program : MonoBehaviour
     }
 
     // returns a list of remote files in a recursive manner
-    private List<ApiTree> GetRemoteFiles(string id, string path, string branch = "master", string filename = "")
+    private List<GitNode> GetRemoteFiles(string id, string path, string branch = "master", string filename = "")
     {
-        List<ApiTree> remoteFiles = new List<ApiTree>();
+        List<GitNode> remoteFiles = new List<GitNode>();
         try
         {
-            List<ApiTree> dir = RequestFromGit<List<ApiTree>>(id, path: filename, branch: branch);
-            foreach (ApiTree file in dir)
+            List<GitNode> dir = RequestFromGit<List<GitNode>>(id, path: filename, branch: branch);
+            foreach (GitNode file in dir)
             {
                 if (file.type == "tree")
                     remoteFiles.AddRange(GetRemoteFiles(id: id, branch: branch, filename: file.path, path: path));
                 else
                 {
-                    file.matchesLocal = localSha.MatchesCache(path + file.path, file.id);
+                    file.matches_local = localSha.MatchesCache(path + file.path, file.id);
                     remoteFiles.Add(file);
                 }
             }
             return remoteFiles;
         }
-        catch (Exception e) { Program.DEBUGLOG("ApiTree get error"); return new List<ApiTree>(); }
+        catch (Exception e) { Program.DEBUGLOG("GitNode get error"); return new List<GitNode>(); }
     }
 
-    private string DownloadGitFile(string id, string writePath, string folderPath)
+    private void DownloadGitFile(string id, GitNode file, string folderPath)
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
             throw new Exception("Internet error");
-        ApiFile file = RequestFromGit<ApiFile>(id, writePath);
+        GitFile file = RequestFromGit<GitFile>(id, file.path);
         byte[] bytes = Convert.FromBase64String(file.content);
-        folderPath += writePath;
-        string dir = folderPath.Substring(0, folderPath.LastIndexOf('/'));
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-        File.WriteAllBytes(folderPath, bytes);
-        return folderPath;
+        string downloadFile = Path.combine(folderPath, file.path);
+        string downloadDir = Path.GetDirectoryName(downloadPath);
+        if (!Directory.Exists(downloadDir)) Directory.CreateDirectory(downloadDir);
+        File.WriteAllBytes(downloadFile, bytes);
+        localSha.UpdateInsertCache(downloadFile, file.id);
     }
 
     public static GameObject pointedGameObject = null;
