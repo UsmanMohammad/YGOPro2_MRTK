@@ -45,4 +45,6 @@ public class ApiTree
     public string type { get; set; }
     public string path { get; set; }
     public string mode { get; set; }
+
+    public bool matchesLocal;
 }
