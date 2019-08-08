@@ -148,6 +148,7 @@ public class Program : MonoBehaviour
     public GameObject New_ocgcore_placeSelector;
     public BGMController bgm;
     public ShaCache localSha;
+    public MonoDownloader monoDownloader;
     #endregion
 
     #region Initializement
@@ -426,8 +427,7 @@ public class Program : MonoBehaviour
     {
         if (remoteFiles.Count == 0)
             return;
-        List<string> local = new List<string>();
-        local.AddRange(Directory.GetFiles(path, "*.*", SearchOption.AllDirectories));
+        List<string> local = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).ToList();
         foreach (string s in local)
         {
             if (s.Contains("config.conf"))
@@ -482,10 +482,10 @@ public class Program : MonoBehaviour
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
             throw new Exception("Internet error");
-        GitFile file = RequestFromGit<GitFile>(id, file.path);
-        byte[] bytes = Convert.FromBase64String(file.content);
-        string downloadFile = Path.combine(folderPath, file.path);
-        string downloadDir = Path.GetDirectoryName(downloadPath);
+        GitFile download = RequestFromGit<GitFile>(id, file.path);
+        byte[] bytes = Convert.FromBase64String(download.content);
+        string downloadFile = Path.Combine(folderPath, file.path);
+        string downloadDir = Path.GetDirectoryName(folderPath);
         if (!Directory.Exists(downloadDir)) Directory.CreateDirectory(downloadDir);
         File.WriteAllBytes(downloadFile, bytes);
         localSha.UpdateInsertCache(downloadFile, file.id);
@@ -1088,6 +1088,7 @@ public class Program : MonoBehaviour
         }
         backGroundPic.show();
         bgm = gameObject.AddComponent<BGMController>();
+        monoDownloader = gameObject.AddComponent<MonoDownloader>();
         shiftToServant(menu);
     }
 
