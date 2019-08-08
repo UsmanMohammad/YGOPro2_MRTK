@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.IO;
@@ -56,12 +56,6 @@ public class NonMonoScript
 
         //And also use StopCoroutine function
         mono.StopCoroutine(testFunction());
-    }
-
-    IEnumerator testFunction()
-    {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("Test!");
     }
 }
 public class MonoDownload : MonoBehaviour

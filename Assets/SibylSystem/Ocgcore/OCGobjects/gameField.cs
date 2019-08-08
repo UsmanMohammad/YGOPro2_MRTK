@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -451,9 +451,6 @@ public class GameField : OCGobject
                         }
                         if (tex == null && code.ToString().Length > 0 && !(Application.internetReachability == NetworkReachability.NotReachable) && Program.I().setting.autoPicDownload)
                         {
-                            //HQ  Field
-                            //df.Download("https://pictures.duelistsunite.org/hq/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
-                            //   MonoDownload md = new MonoDownload("https://pictures.duelistsunite.org/hq/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
                             EventHandler handler = null;
                             handler = (object sender, EventArgs e) =>
                               {
