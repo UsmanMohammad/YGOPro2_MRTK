@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -402,7 +402,7 @@ public class GameField : OCGobject
 
     }
 
-    private static void relocateTextMesh(TMPro.TextMeshPro obj, uint con, CardLocation loc,Vector3 poi)
+    private static void relocateTextMesh(TMPro.TextMeshPro obj, uint con, CardLocation loc, Vector3 poi)
     {
         obj.transform.position = UIHelper.getCamGoodPosition(Program.I().ocgcore.get_point_worldposition(new GPS
         {
@@ -449,14 +449,27 @@ public class GameField : OCGobject
                         {
                             tex = UIHelper.getTexture2D("pics/field/" + code.ToString() + ".jpg");
                         }
-                        if ( tex == null && code.ToString().Length > 0 && !(Application.internetReachability == NetworkReachability.NotReachable) && Program.I().setting.autoPicDownload)
+                        if (tex == null && code.ToString().Length > 0 && !(Application.internetReachability == NetworkReachability.NotReachable) && Program.I().setting.autoPicDownload)
                         {
-                            //HQ  Field
-                            df.Download("https://pictures.duelistsunite.org/hq/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
-                            if (File.Exists("picture/field/" + code.ToString() + ".jpg"))
-                            {
-                                tex = UIHelper.getTexture2D("picture/field/" + code.ToString() + ".jpg");
-                            }
+                            EventHandler handler = null;
+                            handler = (object sender, EventArgs e) =>
+                              {
+                                  Program.I().monoDownloader.DownloadCardCompleted -= handler;
+                                  if (File.Exists("picture/field/" + code.ToString() + ".jpg"))
+                                  {
+                                      tex = UIHelper.getTexture2D("picture/field/" + code.ToString() + ".jpg");
+                                  }
+                                  if (tex != null)
+                                  {
+                                      UIHelper.getByName<UITexture>(gameObject, "field_" + player.ToString()).mainTexture = tex;
+                                      UIHelper.clearITWeen(UIHelper.getByName(gameObject, "obj_" + player.ToString()));
+                                      iTween.ScaleTo(UIHelper.getByName(gameObject, "obj_" + player.ToString()), new Vector3(1, 1, 1), 0.5f);
+                                  }
+                              };
+                            Program.I().monoDownloader.DownloadCardCompleted += handler;
+                            Program.I().monoDownloader.start("https://pictures.duelistsunite.org/hq/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
+
+
                         }
                         if (tex != null)
                         {
@@ -478,6 +491,7 @@ public class GameField : OCGobject
                 }
             }
     }
+
 
     GameObject cookie_dark_hole;
 
