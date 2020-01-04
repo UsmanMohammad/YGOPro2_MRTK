@@ -33,7 +33,7 @@ public class BGMController : MonoBehaviour
 #if UNITY_IOS
 		multiplier=0.08f;
 #endif
-        multiplier = 0.8f;
+        multiplier = 0.7f;
         //if (Program.I().setting != null && !Program.I().setting.isBGMMute.value)
         //{
         //    PlayAudioFile(0);
@@ -88,6 +88,7 @@ public class BGMController : MonoBehaviour
             if (audioSource != null)
             {
                 audioSource.volume = vol * multiplier;
+                GameObject.Find("Audio Source").GetComponent<AudioSource>().volume = vol;
             }
         }
         catch { }
