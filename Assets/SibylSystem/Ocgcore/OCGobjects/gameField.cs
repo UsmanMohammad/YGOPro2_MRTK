@@ -467,7 +467,7 @@ public class GameField : OCGobject
                                   }
                               };
                             Program.I().monoDownloader.DownloadCardCompleted += handler;
-                            Program.I().monoDownloader.start("https://pictures.duelistsunite.org/hq/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
+                            Program.I().monoDownloader.start("http://duelistsunite.org/pictures/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
 
 
                         }
