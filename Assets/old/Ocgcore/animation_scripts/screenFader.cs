@@ -40,9 +40,9 @@ public class screenFader : MonoBehaviour
         }
         gameObject.transform.position = new Vector3
             (
-            iTween.easeOutQuad(from.x, to.x, deltaTimeCloseUp / time),
-            iTween.easeOutQuad(from.y, to.y, deltaTimeCloseUp / time),
-            iTween.easeOutQuad(from.z, to.z, deltaTimeCloseUp / time)
+            iTweenExtensions.easeOutQuad(from.x, to.x, deltaTimeCloseUp / time),
+            iTweenExtensions.easeOutQuad(from.y, to.y, deltaTimeCloseUp / time),
+            iTweenExtensions.easeOutQuad(from.z, to.z, deltaTimeCloseUp / time)
             );
     }
 }

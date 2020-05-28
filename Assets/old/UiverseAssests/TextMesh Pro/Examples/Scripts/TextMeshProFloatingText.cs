@@ -11,7 +11,6 @@ namespace TMPro.Examples
 
         private GameObject m_floatingText;
         private TextMeshPro m_textMeshPro;
-        private TextContainer m_textContainer;
         private TextMesh m_textMesh;
 
         private Transform m_transform;
@@ -28,52 +27,58 @@ namespace TMPro.Examples
         void Awake()
         {
             m_transform = transform;
-            m_floatingText = new GameObject(m_transform.name + " floating text");
+            m_floatingText = new GameObject(this.name + " floating text");
 
-            m_floatingText_Transform = m_floatingText.transform;
-            m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
+            // Reference to Transform is lost when TMP component is added since it replaces it by a RectTransform.
+            //m_floatingText_Transform = m_floatingText.transform;
+            //m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
 
             m_cameraTransform = Camera.main.transform;
-
-            //m_parentScript = GetComponent<TextMeshSpawner>();
-
-            //Debug.Log(m_parentScript.NumberOfNPC);
         }
 
         void Start()
         {
             if (SpawnType == 0)
             {
-                //Debug.Log("Spawning TextMesh Pro Objects.");
                 // TextMesh Pro Implementation
                 m_textMeshPro = m_floatingText.AddComponent<TextMeshPro>();
-                m_textContainer = m_floatingText.GetComponent<TextContainer>();
+                m_textMeshPro.rectTransform.sizeDelta = new Vector2(3, 3);
+                
+                m_floatingText_Transform = m_floatingText.transform;
+                m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
 
-                m_textContainer.isAutoFitting = false;
                 //m_textMeshPro.fontAsset = Resources.Load("Fonts & Materials/JOKERMAN SDF", typeof(TextMeshProFont)) as TextMeshProFont; // User should only provide a string to the resource.
-                //m_textMeshPro.fontSharedMaterial = Resources.Load("Fonts & Materials/ARIAL SDF 1", typeof(Material)) as Material;
-                //m_textContainer.anchorPosition = TextContainerAnchors.Bottom;
+                //m_textMeshPro.fontSharedMaterial = Resources.Load("Fonts & Materials/LiberationSans SDF", typeof(Material)) as Material;
+
                 m_textMeshPro.alignment = TextAlignmentOptions.Center;
                 m_textMeshPro.color = new Color32((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
                 m_textMeshPro.fontSize = 24;
                 //m_textMeshPro.enableExtraPadding = true;
                 //m_textMeshPro.enableShadows = false;
+                m_textMeshPro.enableKerning = false;
                 m_textMeshPro.text = string.Empty;
 
                 StartCoroutine(DisplayTextMeshProFloatingText());
             }
-            else
+            else if (SpawnType == 1)
             {
                 //Debug.Log("Spawning TextMesh Objects.");
 
+                m_floatingText_Transform = m_floatingText.transform;
+                m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
+
                 m_textMesh = m_floatingText.AddComponent<TextMesh>();
-                m_textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
+                m_textMesh.font = Resources.Load<Font>("Fonts/ARIAL");
                 m_textMesh.GetComponent<Renderer>().sharedMaterial = m_textMesh.font.material;
                 m_textMesh.color = new Color32((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
                 m_textMesh.anchor = TextAnchor.LowerCenter;
                 m_textMesh.fontSize = 24;
 
                 StartCoroutine(DisplayTextMeshFloatingText());
+            }
+            else if (SpawnType == 2)
+            {
+
             }
 
         }
@@ -83,7 +88,7 @@ namespace TMPro.Examples
         //{
         //    if (SpawnType == 0)
         //    {
-        //        m_textMeshPro.SetText("{0}", m_frame);         
+        //        m_textMeshPro.SetText("{0}", m_frame);
         //    }
         //    else
         //    {
@@ -103,7 +108,7 @@ namespace TMPro.Examples
             Vector3 start_pos = m_floatingText_Transform.position;
             Color32 start_color = m_textMeshPro.color;
             float alpha = 255;
-            //int int_counter = 0;
+            int int_counter = 0;
 
 
             float fadeDuration = 3 / starting_Count * CountDuration;
@@ -118,8 +123,9 @@ namespace TMPro.Examples
                     alpha = Mathf.Clamp(alpha - (Time.deltaTime / fadeDuration) * 255, 0, 255);
                 }
 
-                //int_counter = (int)current_Count;                 
-                m_textMeshPro.SetText("{0}", (int)current_Count);
+                int_counter = (int)current_Count;
+                m_textMeshPro.text = int_counter.ToString();
+                //m_textMeshPro.SetText("{0}", (int)current_Count);
 
                 m_textMeshPro.color = new Color32(start_color.r, start_color.g, start_color.b, (byte)alpha);
 

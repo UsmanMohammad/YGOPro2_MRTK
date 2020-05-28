@@ -755,7 +755,7 @@ public class Program : MonoBehaviour
         if (fade == true)
         {
             return_value.transform.localScale = Vector3.zero;
-            iTween.ScaleToE(return_value, scale, 0.3f);
+            iTweenExtensions.ScaleToE(return_value, scale, 0.3f);
         }
         return return_value;
     }

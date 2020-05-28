@@ -54,8 +54,9 @@ static public class NGUITools
 	{
 		get
 		{
-			return Application.platform != RuntimePlatform.WindowsWebPlayer &&
-				Application.platform != RuntimePlatform.OSXWebPlayer;
+			//TODO: 2020 - Set correct fileaccess params
+			return true;
+			//return Application.platform != RuntimePlatform.WindowsWebPlayer && Application.platform != RuntimePlatform.OSXWebPlayer;
 		}
 	}
 

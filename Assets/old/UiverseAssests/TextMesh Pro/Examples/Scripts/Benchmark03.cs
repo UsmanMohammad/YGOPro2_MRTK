@@ -13,21 +13,21 @@ namespace TMPro.Examples
 
         public Font TheFont;
 
-        private TextMeshProFloatingText floatingText_Script;
+        //private TextMeshProFloatingText floatingText_Script;
 
         void Awake()
         {
 
         }
 
+
         void Start()
         {
-
             for (int i = 0; i < NumberOfNPC; i++)
             {
                 if (SpawnType == 0)
                 {
-                    // TextMesh Pro Implementation     
+                    // TextMesh Pro Implementation
                     //go.transform.localScale = new Vector3(2, 2, 2);
                     GameObject go = new GameObject(); //"NPC " + i);
                     //go.transform.position = new Vector3(Random.Range(-95f, 95f), 0.5f, Random.Range(-95f, 95f));
@@ -38,8 +38,8 @@ namespace TMPro.Examples
                     //go.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
                     TextMeshPro textMeshPro = go.AddComponent<TextMeshPro>();
-                    //textMeshPro.FontAsset = Resources.Load("Fonts & Materials/ARIAL SDF 16", typeof(TextMeshProFont)) as TextMeshProFont;
-                    //textMeshPro.anchor = AnchorPositions.Center;
+                    //textMeshPro.FontAsset = Resources.Load("Fonts & Materials/LiberationSans SDF", typeof(TextMeshProFont)) as TextMeshProFont;
+                    textMeshPro.alignment = TextAlignmentOptions.Center;
                     textMeshPro.fontSize = 96;
 
                     textMeshPro.text = "@";

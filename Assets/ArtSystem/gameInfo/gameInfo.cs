@@ -358,14 +358,14 @@ public class gameInfo : MonoBehaviour
             me.api_timeHint.text = t.ToString() + "/" + Program.I().ocgcore.timeLimit.ToString();
             opponent.api_timeHint.text = "waiting";
             UIHelper.clearITWeen(me.api_healthBar.gameObject);
-            iTween.MoveToLocal(me.api_timeBar.gameObject, new Vector3((float)(me.api_timeBar.width) - (float)t / (float)Program.I().ocgcore.timeLimit * (float)(me.api_timeBar.width), me.api_healthBar.gameObject.transform.localPosition.y, me.api_healthBar.gameObject.transform.localPosition.z), 1f);
+            iTweenExtensions.MoveToLocal(me.api_timeBar.gameObject, new Vector3((float)(me.api_timeBar.width) - (float)t / (float)Program.I().ocgcore.timeLimit * (float)(me.api_timeBar.width), me.api_healthBar.gameObject.transform.localPosition.y, me.api_healthBar.gameObject.transform.localPosition.z), 1f);
         }
         if (player == 1)
         {
             opponent.api_timeHint.text = t.ToString() + "/" + Program.I().ocgcore.timeLimit.ToString();
             me.api_timeHint.text = "waiting";
             UIHelper.clearITWeen(opponent.api_healthBar.gameObject);
-            iTween.MoveToLocal(opponent.api_timeBar.gameObject, new Vector3((float)(opponent.api_timeBar.width) - (float)t / (float)Program.I().ocgcore.timeLimit * (float)(opponent.api_timeBar.width), opponent.api_healthBar.gameObject.transform.localPosition.y, opponent.api_healthBar.gameObject.transform.localPosition.z), 1f);
+            iTweenExtensions.MoveToLocal(opponent.api_timeBar.gameObject, new Vector3((float)(opponent.api_timeBar.width) - (float)t / (float)Program.I().ocgcore.timeLimit * (float)(opponent.api_timeBar.width), opponent.api_healthBar.gameObject.transform.localPosition.y, opponent.api_healthBar.gameObject.transform.localPosition.z), 1f);
         }
     }
 
@@ -377,11 +377,11 @@ public class gameInfo : MonoBehaviour
         opponent.api_name.text = Program.I().ocgcore.name_1_c;
         me.api_face.mainTexture = UIHelper.getFace(Program.I().ocgcore.name_0_c);
         opponent.api_face.mainTexture = UIHelper.getFace(Program.I().ocgcore.name_1_c);
-        iTween.MoveToLocal(me.api_healthBar.gameObject, new Vector3(
+        iTweenExtensions.MoveToLocal(me.api_healthBar.gameObject, new Vector3(
             (float)(me.api_healthBar.width) - getRealLife(Program.I().ocgcore.life_0) / ((float)Program.I().ocgcore.lpLimit) * (float)(me.api_healthBar.width),
             me.api_healthBar.gameObject.transform.localPosition.y,
             me.api_healthBar.gameObject.transform.localPosition.z), 1f);
-        iTween.MoveToLocal(opponent.api_healthBar.gameObject, new Vector3(
+        iTweenExtensions.MoveToLocal(opponent.api_healthBar.gameObject, new Vector3(
             (float)(opponent.api_healthBar.width) - getRealLife(Program.I().ocgcore.life_1) / ((float)Program.I().ocgcore.lpLimit) * (float)(opponent.api_healthBar.width),
             opponent.api_healthBar.gameObject.transform.localPosition.y,
             opponent.api_healthBar.gameObject.transform.localPosition.z), 1f);

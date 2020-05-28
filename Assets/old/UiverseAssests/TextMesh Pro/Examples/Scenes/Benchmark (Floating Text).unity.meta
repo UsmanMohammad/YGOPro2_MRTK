@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7178d3749729bce4bad9eb5c821395a0
+guid: de0d5c1c09fbb4244b4b35dbdbecf736
 labels:
 - Mesh
 - Text
@@ -18,8 +18,6 @@ labels:
 - Layout
 - Atlas
 - Kerning
-timeCreated: 1478780256
-licenseType: Pro
 DefaultImporter:
   userData: 
   assetBundleName: 
