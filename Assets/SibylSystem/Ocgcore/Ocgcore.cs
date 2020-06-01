@@ -438,7 +438,7 @@ public class Ocgcore : ServantWithCardDescription
         {
             gameInfo.gameObject.transform.localPosition = new Vector3(300, 0, 0);
             gameInfo.gameObject.SetActive(true);
-            iTween.MoveToLocal(gameInfo.gameObject, Vector3.zero, 0.6f);
+            iTweenExtensions.MoveToLocal(gameInfo.gameObject, Vector3.zero, 0.6f);
             gameInfo.ini();
             UIHelper.getByName<UIToggle>(gameInfo.gameObject, "ignore_").value = false;
             UIHelper.getByName<UIToggle>(gameInfo.gameObject, "watch_").value = false;
