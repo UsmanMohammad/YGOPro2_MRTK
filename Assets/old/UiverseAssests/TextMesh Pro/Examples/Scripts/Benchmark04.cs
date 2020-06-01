@@ -15,7 +15,7 @@ namespace TMPro.Examples
         public int Steps = 4;
 
         private Transform m_Transform;
-        private TextMeshProFloatingText floatingText_Script;
+        //private TextMeshProFloatingText floatingText_Script;
         //public Material material;
 
 
@@ -31,19 +31,21 @@ namespace TMPro.Examples
             {
                 if (SpawnType == 0)
                 {
-                    // TextMesh Pro Implementation                    
-                    GameObject go = new GameObject("Arial " + i);
+                    // TextMesh Pro Implementation
+                    GameObject go = new GameObject("Text - " + i + " Pts");
 
                     if (lineHeight > orthoSize * 2) return;
 
                     go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight, 0);
 
                     TextMeshPro textMeshPro = go.AddComponent<TextMeshPro>();
-                    TextContainer textContainer = go.GetComponent<TextContainer>();
+
                     //textMeshPro.fontSharedMaterial = material;
-                    //textMeshPro.font = Resources.Load("Fonts & Materials/Arial SDF Ortho", typeof(TextMeshProFont)) as TextMeshProFont;                                    
+                    //textMeshPro.font = Resources.Load("Fonts & Materials/LiberationSans SDF", typeof(TextMeshProFont)) as TextMeshProFont;
                     //textMeshPro.anchor = AnchorPositions.Left;
-                    textContainer.anchorPosition = TextContainerAnchors.Left;
+                    textMeshPro.rectTransform.pivot = new Vector2(0, 0.5f);
+
+                    textMeshPro.enableWordWrapping = false;
                     textMeshPro.extraPadding = true;
                     textMeshPro.isOrthographic = true;
                     textMeshPro.fontSize = i;
@@ -62,11 +64,11 @@ namespace TMPro.Examples
 
                     //if (lineHeight > orthoSize * 2 * 0.9f) return;
 
-                    go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight, 1);          
+                    go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight, 1);
                                        
                     TextMesh textMesh = go.AddComponent<TextMesh>();
                     textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
-                    textMesh.renderer.sharedMaterial = textMesh.font.material;        
+                    textMesh.renderer.sharedMaterial = textMesh.font.material;
                     textMesh.anchor = TextAnchor.MiddleLeft;
                     textMesh.fontSize = i * 10;
 
