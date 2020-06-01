@@ -3,13 +3,13 @@ using System.Collections;
 using System;
 
 public class fusion_tweener : MonoBehaviour {
-    ParticleEmitter[] emitters;
-    ParticleAnimator[] animators;
+    //ParticleEmitter[] emitters;
+    //ParticleAnimator[] animators;
     ParticleSystem[] systems;
 	// Use this for initialization
 	void Start () {
-        emitters = GetComponentsInChildren<ParticleEmitter>();
-        animators = GetComponentsInChildren<ParticleAnimator>();
+        //emitters = GetComponentsInChildren<ParticleEmitter>();
+        //animators = GetComponentsInChildren<ParticleAnimator>();
         systems = GetComponentsInChildren<ParticleSystem>();
         start_time = Program.TimePassed();
         foreach (ParticleSystem system in systems)
@@ -18,22 +18,22 @@ public class fusion_tweener : MonoBehaviour {
             system.startSize *= scaleFactor;
             system.gravityModifier *= scaleFactor;
         }
-        //apply scaling to emitters
-        foreach (ParticleEmitter emitter in emitters)
-        {
-            emitter.minSize *= scaleFactor;
-            emitter.maxSize *= scaleFactor;
-            emitter.worldVelocity *= scaleFactor;
-            emitter.localVelocity *= scaleFactor;
-            emitter.rndVelocity *= scaleFactor;
-        }
+        ////apply scaling to emitters
+        //foreach (ParticleEmitter emitter in emitters)
+        //{
+        //    emitter.minSize *= scaleFactor;
+        //    emitter.maxSize *= scaleFactor;
+        //    emitter.worldVelocity *= scaleFactor;
+        //    emitter.localVelocity *= scaleFactor;
+        //    emitter.rndVelocity *= scaleFactor;
+        //}
 
-        //apply scaling to animators
-        foreach (ParticleAnimator animator in animators)
-        {
-            animator.force *= scaleFactor;
-            animator.rndForce *= scaleFactor;
-        }
+        ////apply scaling to animators
+        //foreach (ParticleAnimator animator in animators)
+        //{
+        //    animator.force *= scaleFactor;
+        //    animator.rndForce *= scaleFactor;
+        //}
 	}
     int step = 1;
     float scaleFactor = 0.1f;
@@ -81,21 +81,21 @@ public class fusion_tweener : MonoBehaviour {
             system.startSize *= scaleFactor;
             system.gravityModifier *= scaleFactor;
         }
-        //apply scaling to emitters
-        foreach (ParticleEmitter emitter in emitters)
-        {
-            emitter.minSize *= scaleFactor;
-            emitter.maxSize *= scaleFactor;
-            emitter.worldVelocity *= scaleFactor;
-            emitter.localVelocity *= scaleFactor;
-            emitter.rndVelocity *= scaleFactor;
-        }
+        ////apply scaling to emitters
+        //foreach (ParticleEmitter emitter in emitters)
+        //{
+        //    emitter.minSize *= scaleFactor;
+        //    emitter.maxSize *= scaleFactor;
+        //    emitter.worldVelocity *= scaleFactor;
+        //    emitter.localVelocity *= scaleFactor;
+        //    emitter.rndVelocity *= scaleFactor;
+        //}
 
-        //apply scaling to animators
-        foreach (ParticleAnimator animator in animators)
-        {
-            animator.force *= scaleFactor;
-            animator.rndForce *= scaleFactor;
-        }
+        ////apply scaling to animators
+        //foreach (ParticleAnimator animator in animators)
+        //{
+        //    animator.force *= scaleFactor;
+        //    animator.rndForce *= scaleFactor;
+        //}
     }
 }
