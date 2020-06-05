@@ -6754,7 +6754,17 @@ public class iTween : MonoBehaviour
 			//throw an error if a string wasn't passed for callback:
 			if (tweenArguments[callbackType].GetType() == typeof(System.String)) {
 				target.SendMessage((string)tweenArguments[callbackType],(object)tweenArguments[callbackType+"params"],SendMessageOptions.DontRequireReceiver);
-			}else{
+			}
+			else if (tweenArguments[callbackType] is Action)
+			{
+				((Action)tweenArguments[callbackType]).Invoke();
+			}
+			else if (tweenArguments[callbackType] is Action<object>)
+			{
+				((Action<object>)tweenArguments[callbackType]).Invoke((object)tweenArguments[callbackType + "params"]);
+			}
+			else
+			{
 				Debug.LogError("iTween Error: Callback method references must be passed as a String!");
 				Destroy (this);
 			}
