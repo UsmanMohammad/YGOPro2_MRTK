@@ -1,3 +1,7 @@
+// Copyright (C) 2014 Stephan Schaem - All Rights Reserved
+// This code can only be used under the standard Unity Asset Store End User License Agreement
+// A Copy of the EULA APPENDIX 1 is available at http://unity3d.com/company/legal/as_terms
+
 // UI Editable properties
 uniform sampler2D	_FaceTex;					// Alpha : Signed Distance
 uniform float		_FaceUVSpeedX;
@@ -61,16 +65,8 @@ uniform float		_ScaleRatioC;
 uniform float		_VertexOffsetX;
 uniform float		_VertexOffsetY;
 
-//uniform float		_UseClipRect;
 uniform float		_MaskID;
-uniform sampler2D	_MaskTex;
-uniform float4		_MaskCoord;
-uniform float4		_ClipRect;	// bottom left(x,y) : top right(z,w)
-//uniform float		_MaskWipeControl;
-//uniform float		_MaskEdgeSoftness;
-//uniform fixed4		_MaskEdgeColor;
-//uniform bool		_MaskInverse;
-
+uniform float4		_MaskCoord;					// Center(x,y) : Size(z,w)
 uniform float		_MaskSoftnessX;
 uniform float		_MaskSoftnessY;
 
@@ -82,4 +78,3 @@ uniform float 		_GradientScale;
 uniform float		_ScaleX;
 uniform float		_ScaleY;
 uniform float		_PerspectiveFilter;
-uniform float		_Sharpness;

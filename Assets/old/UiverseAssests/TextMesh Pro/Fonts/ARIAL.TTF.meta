@@ -1,22 +1,18 @@
 fileFormatVersion: 2
 guid: f775853fdfd14bb47934543e95c3bae3
+timeCreated: 1480605850
+licenseType: Pro
 TrueTypeFontImporter:
-  externalObjects: {}
-  serializedVersion: 4
-  fontSize: 16
+  serializedVersion: 2
+  fontSize: 36
   forceTextureCase: -2
-  characterSpacing: 0
-  characterPadding: 1
+  characterSpacing: 1
+  characterPadding: 0
   includeFontData: 1
-  fontName: Arial
-  fontNames:
-  - Arial
-  fallbackFontReferences: []
+  use2xBehaviour: 0
+  fontNames: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: 20170219
+  assetBundleVariant: 0201
