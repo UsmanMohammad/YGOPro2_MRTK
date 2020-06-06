@@ -1120,7 +1120,7 @@ int32 scriptlib::duel_swap_control(lua_State *L) {
 	card* pcard2 = 0;
 	group* pgroup1 = 0;
 	group* pgroup2 = 0;
-	duel* pduel;
+	duel* pduel = NULL;
 	if(check_param(L, PARAM_TYPE_CARD, 1, TRUE) && check_param(L, PARAM_TYPE_CARD, 2, TRUE)) {
 		pcard1 = *(card**) lua_touserdata(L, 1);
 		pcard2 = *(card**) lua_touserdata(L, 2);

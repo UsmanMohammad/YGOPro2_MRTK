@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <PropertyGroup Label="Globals">
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <ProjectGuid>{9c57029f-0795-46b0-9168-26c9ab9ea703}</ProjectGuid>
+    <ProjectName>ocgcore_winrt</ProjectName>
+    <RootNamespace>ocgcore_winrt</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level4</WarningLevel>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
+      <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <PreprocessorDefinitions>_WINRT_DLL;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>ocgcore_winrt.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ocgcore\card.h" />
+    <ClInclude Include="..\ocgcore\common.h" />
+    <ClInclude Include="..\ocgcore\duel.h" />
+    <ClInclude Include="..\ocgcore\effect.h" />
+    <ClInclude Include="..\ocgcore\effectset.h" />
+    <ClInclude Include="..\ocgcore\field.h" />
+    <ClInclude Include="..\ocgcore\group.h" />
+    <ClInclude Include="..\ocgcore\interpreter.h" />
+    <ClInclude Include="..\ocgcore\lapi.h" />
+    <ClInclude Include="..\ocgcore\lauxlib.h" />
+    <ClInclude Include="..\ocgcore\lcode.h" />
+    <ClInclude Include="..\ocgcore\lctype.h" />
+    <ClInclude Include="..\ocgcore\ldebug.h" />
+    <ClInclude Include="..\ocgcore\ldo.h" />
+    <ClInclude Include="..\ocgcore\lfunc.h" />
+    <ClInclude Include="..\ocgcore\lgc.h" />
+    <ClInclude Include="..\ocgcore\llex.h" />
+    <ClInclude Include="..\ocgcore\llimits.h" />
+    <ClInclude Include="..\ocgcore\lmem.h" />
+    <ClInclude Include="..\ocgcore\lobject.h" />
+    <ClInclude Include="..\ocgcore\lopcodes.h" />
+    <ClInclude Include="..\ocgcore\lparser.h" />
+    <ClInclude Include="..\ocgcore\lstate.h" />
+    <ClInclude Include="..\ocgcore\lstring.h" />
+    <ClInclude Include="..\ocgcore\ltable.h" />
+    <ClInclude Include="..\ocgcore\ltm.h" />
+    <ClInclude Include="..\ocgcore\lua.h" />
+    <ClInclude Include="..\ocgcore\luaconf.h" />
+    <ClInclude Include="..\ocgcore\lualib.h" />
+    <ClInclude Include="..\ocgcore\lundump.h" />
+    <ClInclude Include="..\ocgcore\lvm.h" />
+    <ClInclude Include="..\ocgcore\lzio.h" />
+    <ClInclude Include="..\ocgcore\mtrandom.h" />
+    <ClInclude Include="..\ocgcore\ocgapi.h" />
+    <ClInclude Include="..\ocgcore\scriptlib.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Class.h">
+      <DependentUpon>Class.idl</DependentUpon>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ocgcore\card.cpp" />
+    <ClCompile Include="..\ocgcore\duel.cpp" />
+    <ClCompile Include="..\ocgcore\effect.cpp" />
+    <ClCompile Include="..\ocgcore\field.cpp" />
+    <ClCompile Include="..\ocgcore\group.cpp" />
+    <ClCompile Include="..\ocgcore\interpreter.cpp" />
+    <ClCompile Include="..\ocgcore\lapi.c" />
+    <ClCompile Include="..\ocgcore\lauxlib.c" />
+    <ClCompile Include="..\ocgcore\lbaselib.c" />
+    <ClCompile Include="..\ocgcore\lbitlib.c" />
+    <ClCompile Include="..\ocgcore\lcode.c" />
+    <ClCompile Include="..\ocgcore\lcorolib.c" />
+    <ClCompile Include="..\ocgcore\lctype.c" />
+    <ClCompile Include="..\ocgcore\ldblib.c" />
+    <ClCompile Include="..\ocgcore\ldebug.c" />
+    <ClCompile Include="..\ocgcore\ldo.c" />
+    <ClCompile Include="..\ocgcore\ldump.c" />
+    <ClCompile Include="..\ocgcore\lfunc.c" />
+    <ClCompile Include="..\ocgcore\lgc.c" />
+    <ClCompile Include="..\ocgcore\libcard.cpp" />
+    <ClCompile Include="..\ocgcore\libdebug.cpp" />
+    <ClCompile Include="..\ocgcore\libduel.cpp" />
+    <ClCompile Include="..\ocgcore\libeffect.cpp" />
+    <ClCompile Include="..\ocgcore\libgroup.cpp" />
+    <ClCompile Include="..\ocgcore\linit.c" />
+    <ClCompile Include="..\ocgcore\liolib.c" />
+    <ClCompile Include="..\ocgcore\llex.c" />
+    <ClCompile Include="..\ocgcore\lmathlib.c" />
+    <ClCompile Include="..\ocgcore\lmem.c" />
+    <ClCompile Include="..\ocgcore\loadlib.c" />
+    <ClCompile Include="..\ocgcore\lobject.c" />
+    <ClCompile Include="..\ocgcore\lopcodes.c" />
+    <ClCompile Include="..\ocgcore\loslib.c" />
+    <ClCompile Include="..\ocgcore\lparser.c" />
+    <ClCompile Include="..\ocgcore\lstate.c" />
+    <ClCompile Include="..\ocgcore\lstring.c" />
+    <ClCompile Include="..\ocgcore\lstrlib.c" />
+    <ClCompile Include="..\ocgcore\ltable.c" />
+    <ClCompile Include="..\ocgcore\ltablib.c" />
+    <ClCompile Include="..\ocgcore\ltm.c" />
+    <ClCompile Include="..\ocgcore\lundump.c" />
+    <ClCompile Include="..\ocgcore\lvm.c" />
+    <ClCompile Include="..\ocgcore\lzio.c" />
+    <ClCompile Include="..\ocgcore\mem.cpp" />
+    <ClCompile Include="..\ocgcore\ocgapi.cpp" />
+    <ClCompile Include="..\ocgcore\operations.cpp" />
+    <ClCompile Include="..\ocgcore\playerop.cpp" />
+    <ClCompile Include="..\ocgcore\processor.cpp" />
+    <ClCompile Include="..\ocgcore\scriptlib.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <DependentUpon>Class.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="Class.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ocgcore_winrt.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="PropertySheet.props" />
+    <Text Include="readme.txt">
+      <DeploymentContent>false</DeploymentContent>
+    </Text>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.200602.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+  </Target>
+</Project>

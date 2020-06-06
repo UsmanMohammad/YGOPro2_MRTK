@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>accd3aa8-1ba0-4223-9bbe-0c431709210b</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{410d1c20-8b26-44cb-854c-8f8257ee65ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{21b056bd-f643-4a76-b230-c9e10a7e2211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{71c3d33f-c87f-47ee-ac43-4f9edb9ab9bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Class.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="..\ocgcore\card.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\duel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\effect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\field.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\group.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\interpreter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lapi.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lauxlib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lbaselib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lbitlib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lcode.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lcorolib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lctype.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ldblib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ldebug.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ldo.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ldump.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lfunc.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lgc.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\libcard.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\libdebug.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\libduel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\libeffect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\libgroup.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\linit.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\liolib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\llex.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lmathlib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lmem.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\loadlib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lobject.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lopcodes.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\loslib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lparser.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lstate.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lstring.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lstrlib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ltable.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ltablib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ltm.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lundump.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lvm.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\lzio.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\mem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\ocgapi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\operations.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\playerop.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\processor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ocgcore\scriptlib.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\ocgcore\card.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\duel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\effect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\effectset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\field.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\group.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\interpreter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lapi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lauxlib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lcode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lctype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\ldebug.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\ldo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lfunc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lgc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\llex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\llimits.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lmem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lobject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lopcodes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lparser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lstate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lstring.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\ltable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\ltm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lua.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\luaconf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lualib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lundump.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lvm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\lzio.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\mtrandom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\ocgapi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ocgcore\scriptlib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="Class.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ocgcore_winrt.def" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PropertySheet.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+</Project>

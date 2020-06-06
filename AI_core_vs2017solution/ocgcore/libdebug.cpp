@@ -431,7 +431,7 @@ int32 scriptlib::get_script_from_card_object(lua_State *L) {
 	lua_pop(L, 1);
 
 	duel* pduel = interpreter::get_duel_info(L);
-	card* c;
+	card* c = NULL;
 	int32 returnval = 0;
 	bool foundTheCard = false;
 	for (auto cit = pduel->cards.begin(); cit != pduel->cards.end(); ++cit) {

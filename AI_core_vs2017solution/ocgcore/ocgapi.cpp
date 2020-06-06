@@ -335,7 +335,7 @@ extern "C" DECL_DLLEXPORT int32 query_field_card(ptr pduel, uint8 playerid, uint
 			}
 		}
 	} else {
-		field::card_vector* lst;
+		field::card_vector* lst = NULL;
 		if(location == LOCATION_HAND)
 			lst = &player.list_hand;
 		else if(location == LOCATION_GRAVE)
