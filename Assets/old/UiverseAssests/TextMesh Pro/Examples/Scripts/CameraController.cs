@@ -43,7 +43,7 @@ namespace TMPro.Examples
         private float mouseWheel;
 
         // Controls for Touches on Mobile devices
-        //private float prev_ZoomDelta;
+        private float prev_ZoomDelta;
 
 
         private const string event_SmoothingValue = "Slider - Smoothing Value";
@@ -55,7 +55,7 @@ namespace TMPro.Examples
             if (QualitySettings.vSyncCount > 0)
                 Application.targetFrameRate = 60;
             else
-                Application.targetFrameRate = -1;
+                Application.targetFrameRate = 144;
 
             if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
                 Input.simulateMouseWithTouches = false;
@@ -128,7 +128,7 @@ namespace TMPro.Examples
             moveVector = Vector3.zero;
 
             // Check Mouse Wheel Input prior to Shift Key so we can apply multiplier on Shift for Scrolling
-            mouseWheel = Input.GetAxis("Mouse ScrollWheel");
+            mouseWheel = UICamera.GetAxis("Mouse ScrollWheel");
 
             float touchCount = Input.touchCount;
 
@@ -198,9 +198,8 @@ namespace TMPro.Examples
                 // Check for left mouse button to select a new CameraTarget or to reset Follow position
                 if (Input.GetMouseButton(0))
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
-
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))
                     {
                         if (hit.transform == CameraTarget)

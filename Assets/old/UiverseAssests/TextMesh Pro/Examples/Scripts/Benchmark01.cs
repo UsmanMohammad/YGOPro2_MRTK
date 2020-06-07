@@ -10,7 +10,7 @@ namespace TMPro.Examples
 
         public int BenchmarkType = 0;
 
-        public TMP_FontAsset TMProFont;
+        public TextMeshProFont TMProFont;
         public Font TextMeshFont;
 
         private TextMeshPro m_textMeshPro;
@@ -20,8 +20,8 @@ namespace TMPro.Examples
         private const string label01 = "The <#0050FF>count is: </color>{0}";
         private const string label02 = "The <color=#0050FF>count is: </color>";
 
-        //private string m_string;
-        //private int m_frame;
+        private string m_string;
+        private int m_frame;
 
         private Material m_material01;
         private Material m_material02;
@@ -36,15 +36,16 @@ namespace TMPro.Examples
             if (BenchmarkType == 0) // TextMesh Pro Component
             {
                 m_textMeshPro = gameObject.AddComponent<TextMeshPro>();
-                m_textMeshPro.autoSizeTextContainer = true;
+                m_textContainer = GetComponent<TextContainer>();
+                m_textContainer.isAutoFitting = true;
 
                 //m_textMeshPro.anchorDampening = true;
 
                 if (TMProFont != null)
                     m_textMeshPro.font = TMProFont;
 
-                //m_textMeshPro.font = Resources.Load("Fonts & Materials/Anton SDF", typeof(TextMeshProFont)) as TextMeshProFont; // Make sure the Anton SDF exists before calling this...
-                //m_textMeshPro.fontSharedMaterial = Resources.Load("Fonts & Materials/Anton SDF", typeof(Material)) as Material; // Same as above make sure this material exists.
+                //m_textMeshPro.font = Resources.Load("Fonts & Materials/IMPACT SDF", typeof(TextMeshProFont)) as TextMeshProFont; // Make sure the IMPACT SDF exists before calling this...           
+                //m_textMeshPro.fontSharedMaterial = Resources.Load("Fonts & Materials/IMPACT SDF", typeof(Material)) as Material; // Same as above make sure this material exists.
 
                 m_textMeshPro.fontSize = 48;
                 m_textMeshPro.alignment = TextAlignmentOptions.Center;
@@ -54,13 +55,13 @@ namespace TMPro.Examples
                 //m_textMeshPro.fontSharedMaterial.SetFloat("_OutlineWidth", 0.2f);
                 //m_textMeshPro.fontSharedMaterial.EnableKeyword("UNDERLAY_ON");
                 //m_textMeshPro.lineJustification = LineJustificationTypes.Center;
-                m_textMeshPro.enableWordWrapping = false;    
+                //m_textMeshPro.enableWordWrapping = true;    
                 //m_textMeshPro.lineLength = 60;          
                 //m_textMeshPro.characterSpacing = 0.2f;
                 //m_textMeshPro.fontColor = new Color32(255, 255, 255, 255);
 
                 m_material01 = m_textMeshPro.font.material;
-                m_material02 = Resources.Load<Material>("Fonts & Materials/LiberationSans SDF - Drop Shadow"); // Make sure the LiberationSans SDF exists before calling this...  
+                m_material02 = Resources.Load("Fonts & Materials/ARIAL SDF BEVEL", typeof(Material)) as Material; // Make sure the IMPACT SDF exists before calling this...  
 
 
             }
@@ -82,7 +83,7 @@ namespace TMPro.Examples
                 m_textMesh.fontSize = 48;
                 m_textMesh.anchor = TextAnchor.MiddleCenter;
 
-                //m_textMesh.color = new Color32(255, 255, 0, 255);
+                //m_textMesh.color = new Color32(255, 255, 0, 255);    
             }
 
 
@@ -114,7 +115,7 @@ namespace TMPro.Examples
         {
             if (BenchmarkType == 0)
             {
-                m_textMeshPro.text = (m_frame % 1000).ToString();
+                m_textMeshPro.text = (m_frame % 1000).ToString();            
             }
             else if (BenchmarkType == 1)
             {
