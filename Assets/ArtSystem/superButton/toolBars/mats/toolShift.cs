@@ -46,11 +46,11 @@ public class toolShift : MonoBehaviour {
         {
             if (va.y >= 0)
             {
-                iTween.MoveToLocal(ObjectMust, new Vector3(va.x, -100, va.z), 0.6f);
+                iTweenExtensions.MoveToLocal(ObjectMust, new Vector3(va.x, -100, va.z), 0.6f);
             }
             else
             {
-                iTween.MoveToLocal(ObjectMust, new Vector3(va.x, 0, va.z), 0.6f);
+                iTweenExtensions.MoveToLocal(ObjectMust, new Vector3(va.x, 0, va.z), 0.6f);
             }
         }
         else
@@ -58,13 +58,13 @@ public class toolShift : MonoBehaviour {
             Vector3 vb = ObjectOption.transform.localPosition;
             if (va.y > vb.y)
             {
-                iTween.MoveToLocal(ObjectMust, new Vector3(va.x, -100, va.z), 0.6f);
-                iTween.MoveToLocal(ObjectOption, new Vector3(vb.x, 0, vb.z), 0.6f);
+                iTweenExtensions.MoveToLocal(ObjectMust, new Vector3(va.x, -100, va.z), 0.6f);
+                iTweenExtensions.MoveToLocal(ObjectOption, new Vector3(vb.x, 0, vb.z), 0.6f);
             }
             else
             {
-                iTween.MoveToLocal(ObjectMust, new Vector3(va.x, 0, va.z), 0.6f);
-                iTween.MoveToLocal(ObjectOption, new Vector3(vb.x, -100, vb.z), 0.6f);
+                iTweenExtensions.MoveToLocal(ObjectMust, new Vector3(va.x, 0, va.z), 0.6f);
+                iTweenExtensions.MoveToLocal(ObjectOption, new Vector3(vb.x, -100, vb.z), 0.6f);
             }
         }
     }

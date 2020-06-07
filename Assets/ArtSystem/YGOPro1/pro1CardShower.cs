@@ -10,7 +10,7 @@ public class pro1CardShower : MonoBehaviour {
     public void run()
     {
         mask.gameObject.transform.localPosition = new Vector3(-140, 0, 0);
-        iTween.MoveToLocal(mask.gameObject, new Vector3(140, 0, 0), 0.7f);
+        iTweenExtensions.MoveToLocal(mask.gameObject, new Vector3(140, 0, 0), 0.7f);
     }
 
     public void Dis()

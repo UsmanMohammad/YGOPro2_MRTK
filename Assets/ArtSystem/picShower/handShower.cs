@@ -18,11 +18,11 @@ public class handShower : MonoBehaviour
         texture_0.mainTexture = pics[me];
         texture_1.mainTexture = pics[op];
         GameObject_0.transform.position = Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Screen.width / 2, -Screen.height * 1.5f, 0));
-        iTween.MoveToAction(GameObject_0, Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 - 80, 0)), 1f, () => {
+        iTweenExtensions.MoveToAction(GameObject_0, Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 - 80, 0)), 1f, () => {
             Destroy(GameObject_0,0.3f);
         }, 0);
         GameObject_1.transform.position = Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height * 1.5f, 0));
-        iTween.MoveToAction(GameObject_1, Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 + 80, 0)), 1f, () => {
+        iTweenExtensions.MoveToAction(GameObject_1, Program.camera_main_2d.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 + 80, 0)), 1f, () => {
             Destroy(GameObject_1, 0.3f);
         }, 0);
     }

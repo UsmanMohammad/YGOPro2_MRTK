@@ -41,7 +41,6 @@ deck/
 pack/
 picture/
 puzzle/
-replay/
 texture/
 config/
 bin/
@@ -54,7 +53,6 @@ AI_core_vs2017solution/.vs
 /sound/bgm/song.mp3
 /sound/bgm/song.ogg
 /updates/SHAs.txt
-/replay
 /Assets/SibylSystem/ResourceManagers/RepoData.cs.meta
 /Assets/SibylSystem/ResourceManagers/RepoData.cs
 /picture
