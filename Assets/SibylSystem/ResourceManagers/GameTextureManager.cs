@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading;
+using SkiaSharp;
 using UnityEngine;
 using YGOSharp.OCGWrapper.Enums;
-
+using Bitmap = SkiaSharp.SKBitmap;
+using Image = SkiaSharp.SKImage;
 public enum GameTextureType
 {
     card_picture = 0,
@@ -34,13 +35,13 @@ public class GameTextureManager
 
     public class BitmapHelper
     {
-        public System.Drawing.Color[,] colors = null;
+        public SKColor[,] colors = null;
         public BitmapHelper(string path)
         {
             Bitmap bitmap;
             try
             {
-                bitmap = (Bitmap)Image.FromFile(path);
+                bitmap = Bitmap.Decode(File.OpenRead(path));
             }
             catch (Exception)
             {
@@ -49,31 +50,32 @@ public class GameTextureManager
                 {
                     for (int w = 0; w < 10; w++)
                     {
-                        bitmap.SetPixel(i, w, System.Drawing.Color.White);
+                        bitmap.SetPixel(i, w, SKColors.White);
                     }
                 }
             }
-            var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            IntPtr ptr = bmpData.Scan0;
-            int bytes = Math.Abs(bmpData.Stride) * bitmap.Height;
+
+
+            IntPtr ptr = bitmap.GetPixels();
+            int bytes = Math.Abs(bitmap.RowBytes) * bitmap.Height;
             byte[] rgbValues = new byte[bytes];
             System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-            colors = new System.Drawing.Color[bitmap.Width, bitmap.Height];
+            colors = new SKColor[bitmap.Width, bitmap.Height];
             for (int counter = 0; counter < rgbValues.Length; counter += 4)
             {
                 int i_am = counter / 4;
                 colors[i_am % bitmap.Width, i_am / bitmap.Width]
                     =
-                    System.Drawing.Color.FromArgb(
-                    rgbValues[counter + 3],
+                   new SKColor(
                     rgbValues[counter + 2],
                     rgbValues[counter + 1],
-                    rgbValues[counter + 0]);
+                    rgbValues[counter + 0],
+                    rgbValues[counter + 3]);
             }
-            bitmap.UnlockBits(bmpData);
             bitmap.Dispose();
         }
-        public System.Drawing.Color GetPixel(int a, int b)
+
+        public SKColor GetPixel(int a, int b)
         {
             return colors[a, b];
         }
@@ -365,15 +367,15 @@ public class GameTextureManager
                 {
                     for (int h = 0; h < height; h++)
                     {
-                        System.Drawing.Color color = bitmap.GetPixel(left + w, up + h);
-                        float a = (float)color.A / 255f;
+                        SKColor color = bitmap.GetPixel(left + w, up + h);
+                        float a = (float)color.Alpha / 255f;
                         if (w < 40) if (a > (float)w / (float)40) a = (float)w / (float)40;
                         if (w > (width - 40)) if (a > 1f - (float)(w - (width - 40)) / (float)40) a = 1f - (float)(w - (width - 40)) / (float)40;
                         if (h < 40) if (a > (float)h / (float)40) a = (float)h / (float)40;
                         if (h > (height - 40)) if (a > 1f - (float)(h - (height - 40)) / (float)40) a = 1f - (float)(h - (height - 40)) / (float)40;
-                        pic.hashed_data[w, height - h - 1, 0] = (float)color.R / 255f;
-                        pic.hashed_data[w, height - h - 1, 1] = (float)color.G / 255f;
-                        pic.hashed_data[w, height - h - 1, 2] = (float)color.B / 255f;
+                        pic.hashed_data[w, height - h - 1, 0] = (float)color.Red / 255f;
+                        pic.hashed_data[w, height - h - 1, 1] = (float)color.Green / 255f;
+                        pic.hashed_data[w, height - h - 1, 2] = (float)color.Blue / 255f;
                         pic.hashed_data[w, height - h - 1, 3] = a;
                     }
                 }
@@ -581,11 +583,11 @@ public class GameTextureManager
         {
             for (int h = 0; h < buttom - top; h++)
             {
-                System.Drawing.Color color = bitmap.GetPixel((int)(left + w), (int)(buttom - 1 - h));
-                returnValue[w, h, 0] = (float)color.R / 255f;
-                returnValue[w, h, 1] = (float)color.G / 255f;
-                returnValue[w, h, 2] = (float)color.B / 255f;
-                returnValue[w, h, 3] = (float)color.A / 255f;
+                SKColor color = bitmap.GetPixel((int)(left + w), (int)(buttom - 1 - h));
+                returnValue[w, h, 0] = (float)color.Red / 255f;
+                returnValue[w, h, 1] = (float)color.Green / 255f;
+                returnValue[w, h, 2] = (float)color.Blue / 255f;
+                returnValue[w, h, 3] = (float)color.Alpha / 255f;
             }
         }
 
@@ -598,8 +600,8 @@ public class GameTextureManager
         {
             for (int h = 0; h < bitmap.colors.GetLength(1); h++)
             {
-                System.Drawing.Color color = bitmap.GetPixel(w, h);
-                if (color.A > 10)
+                SKColor color = bitmap.GetPixel(w, h);
+                if (color.Alpha > 10)
                 {
                     right = w;
                     return right;
@@ -615,8 +617,8 @@ public class GameTextureManager
         {
             for (int w = 0; w < bitmap.colors.GetLength(0); w++)
             {
-                System.Drawing.Color color = bitmap.GetPixel(w, h);
-                if (color.A > 10)
+                SKColor color = bitmap.GetPixel(w, h);
+                if (color.Alpha > 10)
                 {
                     down = h;
                     return down;
@@ -632,8 +634,8 @@ public class GameTextureManager
         {
             for (int w = 0; w < bitmap.colors.GetLength(0); w++)
             {
-                System.Drawing.Color color = bitmap.GetPixel(w, h);
-                if (color.A > 10)
+                SKColor color = bitmap.GetPixel(w, h);
+                if (color.Alpha > 10)
                 {
                     up = h;
                     return up;
@@ -654,8 +656,8 @@ public class GameTextureManager
         {
             for (int h = 0; h < bitmap.colors.GetLength(1); h++)
             {
-                System.Drawing.Color color = bitmap.GetPixel(w, h);
-                if (color.A > 10)
+                SKColor color = bitmap.GetPixel(w, h);
+                if (color.Alpha > 10)
                 {
                     left = w;
                     return;
@@ -789,11 +791,11 @@ public class GameTextureManager
             {
                 for (int h = 0; h < height; h++)
                 {
-                    System.Drawing.Color color = bitmap.GetPixel(left + w, up + h);
-                    pic.hashed_data[w, height - h - 1, 0] = (float)color.R / 255f;
-                    pic.hashed_data[w, height - h - 1, 1] = (float)color.G / 255f;
-                    pic.hashed_data[w, height - h - 1, 2] = (float)color.B / 255f;
-                    pic.hashed_data[w, height - h - 1, 3] = (float)color.A / 255f;
+                    SKColor color = bitmap.GetPixel(left + w, up + h);
+                    pic.hashed_data[w, height - h - 1, 0] = (float)color.Red / 255f;
+                    pic.hashed_data[w, height - h - 1, 1] = (float)color.Green / 255f;
+                    pic.hashed_data[w, height - h - 1, 2] = (float)color.Blue / 255f;
+                    pic.hashed_data[w, height - h - 1, 3] = (float)color.Alpha / 255f;
                 }
             }
             float wholeUNalpha = 0;
