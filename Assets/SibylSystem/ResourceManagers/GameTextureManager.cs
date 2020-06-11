@@ -301,18 +301,18 @@ public class GameTextureManager
         }
         else
         {
-            string path = "picture/card/" + pic.code.ToString() + ".jpg";
+            string path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
             if (!File.Exists(path))
             {
-                path = "picture/card/" + pic.code.ToString() + ".png";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
             }
             if (!File.Exists(path))
             {
-                path = "expansions/pics/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/expansions/pics/" + pic.code.ToString() + ".jpg";
             }
             if (!File.Exists(path))
             {
-                path = "pics/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/pics/" + pic.code.ToString() + ".jpg";
             }
             if (!File.Exists(path))
             {
@@ -320,13 +320,13 @@ public class GameTextureManager
                 {
                     while (_basicBackgroundWorkerCardDownload.QueueCount > 1)
                     {
-                        if (File.Exists("picture/card/" + pic.code.ToString() + ".jpg"))
+                        if (File.Exists("Assets/essential/picture/card/" + pic.code.ToString() + ".jpg"))
                         {
-                            LoadCloseupFromCardPicture(pic, "picture/card/" + pic.code.ToString() + ".jpg", false);
+                            LoadCloseupFromCardPicture(pic, "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg", false);
                             return;
                         }
                     }
-                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg", pic, true);
+                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg", pic, true);
                 });
             }
             else
@@ -347,9 +347,9 @@ public class GameTextureManager
     {
         try
         {
-            if (File.Exists("picture/closeup/" + pic.code.ToString() + ".png"))
+            if (File.Exists("Assets/essential/picture/closeup/" + pic.code.ToString() + ".png"))
             {
-                string path = "picture/closeup/" + pic.code.ToString() + ".png";
+                string path = "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png";
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN //编译器、Windows
                 BitmapHelper bitmap = new BitmapHelper(path);
                 int left;
@@ -403,18 +403,18 @@ public class GameTextureManager
             }
             else
             {
-                string path = "picture/card/" + pic.code.ToString() + ".jpg";
+                string path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 if (!File.Exists(path))
                 {
-                    path = "picture/card/" + pic.code.ToString() + ".png";
+                    path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
                 }
                 if (!File.Exists(path))
                 {
-                    path = "expansions/pics/" + pic.code.ToString() + ".jpg";
+                    path = "Assets/essential/expansions/pics/" + pic.code.ToString() + ".jpg";
                 }
                 if (!File.Exists(path))
                 {
-                    path = "pics/" + pic.code.ToString() + ".jpg";
+                    path = "Assets/essential/pics/" + pic.code.ToString() + ".jpg";
                 }
                 if (!File.Exists(path))
                 {
@@ -670,28 +670,28 @@ public class GameTextureManager
     {
         try
         {
-            string path = "picture/closeup/" + pic.code.ToString() + ".png";
+            string path = "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png";
 #if UNITY_ANDROID || UNITY_IOS //Android、iPhone
             if (!File.Exists(path) && AutoPicDownload && Program.I().setting.pictureDownloadVersion.value!="Series 10 HQ")
             {
-                df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "picture/closeup/" + pic.code.ToString() + ".png");
+                df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png");
             }
 #endif
             if (!File.Exists(path) && AutoPicDownload)
             {
                 _basicBackgroundWorkerCloseupDownload.EnqueueWork(() =>
                 {
-                    df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "picture/closeup/" + pic.code.ToString() + ".png", pic, false);
+                    df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png", pic, false);
                 });
                 return;
             }
             if (!File.Exists(path))
             {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN //编译器、Windows
-                path = "picture/card/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 if (!File.Exists(path))
                 {
-                    path = "picture/card/" + pic.code.ToString() + ".png";
+                    path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
                 }
                 bool Iam8 = false;
                 //if (!File.Exists(path))

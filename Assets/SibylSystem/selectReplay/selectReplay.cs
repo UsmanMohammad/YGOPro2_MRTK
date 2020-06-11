@@ -278,7 +278,7 @@ public class selectReplay : WindowServantSP
                 {
                     value += yrp.playerData[i].extra[i2].ToString() + "\r\n";
                 }
-                string name = "deck/" + superScrollView.selectedString + "_" + (i + 1).ToString() + ".ydk";
+                string name = "Assets/essential/deck/" + superScrollView.selectedString + "_" + (i + 1).ToString() + ".ydk";
                 File.WriteAllText(name, value);
                 RMSshow_none(InterString.Get("卡组入库：[?]", name));
             }

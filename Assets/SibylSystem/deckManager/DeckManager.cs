@@ -207,7 +207,7 @@ public class DeckManager : ServantWithCardDescription
         string newname = InterString.Get("[?]的副本", deckName);
         string newnamer = newname;
         int i = 1;
-        while (File.Exists("deck/" + newnamer + ".ydk"))
+        while (File.Exists("Assets/essential/deck/" + newnamer + ".ydk"))
         {
             newnamer = newname + i.ToString();
             i++;
@@ -267,7 +267,7 @@ public class DeckManager : ServantWithCardDescription
                     {
                         value += deck.Side[i].ToString() + "\r\n";
                     }
-                    System.IO.File.WriteAllText("deck/" + deckInUse + ".ydk", value, System.Text.Encoding.UTF8);
+                    System.IO.File.WriteAllText("Assets/essential/deck/" + deckInUse + ".ydk", value, System.Text.Encoding.UTF8);
                 }
                 else
                 {
@@ -286,7 +286,7 @@ public class DeckManager : ServantWithCardDescription
                     {
                         value += deck.Deck_O.Side[i].ToString() + "\r\n";
                     }
-                    System.IO.File.WriteAllText("deck/" + deckInUse + ".ydk", value, System.Text.Encoding.UTF8);
+                    System.IO.File.WriteAllText("Assets/essential/deck/" + deckInUse + ".ydk", value, System.Text.Encoding.UTF8);
                 }
                 deckDirty = false;
                 RMSshow_none(InterString.Get("卡组[?]已经被保存。", deckInUse));

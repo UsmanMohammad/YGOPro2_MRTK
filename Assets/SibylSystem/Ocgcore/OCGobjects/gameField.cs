@@ -425,29 +425,29 @@ public class GameField : OCGobject
                     if (code > 0)
                     {
                         Texture2D tex = null;
-                        if (File.Exists("picture/field/" + code.ToString() + ".jpg"))
+                        if (File.Exists("Assets/essential/picture/field/" + code.ToString() + ".jpg"))
                         {
-                            tex = UIHelper.getTexture2D("picture/field/" + code.ToString() + ".jpg");
+                            tex = UIHelper.getTexture2D("Assets/essential/picture/field/" + code.ToString() + ".jpg");
                         }
-                        else if (File.Exists("picture/field/" + code.ToString() + ".png"))
+                        else if (File.Exists("Assets/essential/picture/field/" + code.ToString() + ".png"))
                         {
-                            tex = UIHelper.getTexture2D("picture/field/" + code.ToString() + ".png");
+                            tex = UIHelper.getTexture2D("Assets/essential/picture/field/" + code.ToString() + ".png");
                         }
-                        else if (File.Exists("expansions/pics/field/" + code.ToString() + ".jpg"))
+                        else if (File.Exists("Assets/essential/expansions/pics/field/" + code.ToString() + ".jpg"))
                         {
-                            tex = UIHelper.getTexture2D("expansions/pics/field/" + code.ToString() + ".jpg");
+                            tex = UIHelper.getTexture2D("Assets/essential/expansions/pics/field/" + code.ToString() + ".jpg");
                         }
-                        else if (File.Exists("expansions/pics/field/" + code.ToString() + ".png"))
+                        else if (File.Exists("Assets/essential/expansions/pics/field/" + code.ToString() + ".png"))
                         {
-                            tex = UIHelper.getTexture2D("expansions/pics/field/" + code.ToString() + ".png");
+                            tex = UIHelper.getTexture2D("Assets/essential/expansions/pics/field/" + code.ToString() + ".png");
                         }
-                        else if (File.Exists("pics/field/" + code.ToString() + ".jpg"))
+                        else if (File.Exists("Assets/essential/pics/field/" + code.ToString() + ".jpg"))
                         {
-                            tex = UIHelper.getTexture2D("pics/field/" + code.ToString() + ".jpg");
+                            tex = UIHelper.getTexture2D("Assets/essential/pics/field/" + code.ToString() + ".jpg");
                         }
-                        else if (File.Exists("pics/field/" + code.ToString() + ".jpg"))
+                        else if (File.Exists("Assets/essential/pics/field/" + code.ToString() + ".jpg"))
                         {
-                            tex = UIHelper.getTexture2D("pics/field/" + code.ToString() + ".jpg");
+                            tex = UIHelper.getTexture2D("Assets/essential/pics/field/" + code.ToString() + ".jpg");
                         }
                         if (tex == null && code.ToString().Length > 0 && !(Application.internetReachability == NetworkReachability.NotReachable) && Program.I().setting.autoPicDownload)
                         {
@@ -455,9 +455,9 @@ public class GameField : OCGobject
                             handler = (object sender, EventArgs e) =>
                               {
                                   Program.I().monoDownloader.DownloadCardCompleted -= handler;
-                                  if (File.Exists("picture/field/" + code.ToString() + ".jpg"))
+                                  if (File.Exists("Assets/essential/picture/field/" + code.ToString() + ".jpg"))
                                   {
-                                      tex = UIHelper.getTexture2D("picture/field/" + code.ToString() + ".jpg");
+                                      tex = UIHelper.getTexture2D("Assets/essential/picture/field/" + code.ToString() + ".jpg");
                                   }
                                   if (tex != null)
                                   {
@@ -467,7 +467,7 @@ public class GameField : OCGobject
                                   }
                               };
                             Program.I().monoDownloader.DownloadCardCompleted += handler;
-                            Program.I().monoDownloader.start("http://duelistsunite.org/pictures/field/" + code.ToString() + ".jpg", "picture/field/" + code.ToString() + ".jpg");
+                            Program.I().monoDownloader.start("http://duelistsunite.org/pictures/field/" + code.ToString() + ".jpg", "Assets/essential/picture/field/" + code.ToString() + ".jpg");
 
 
                         }

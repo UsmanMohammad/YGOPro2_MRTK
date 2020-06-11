@@ -51,7 +51,7 @@ public class SelectServer : WindowServantSP
         inputVersion = UIHelper.getByName<UIInput>(gameObject, "version_");
         set_version(currentClientVersion);
         SetActiveFalse();
-        string[] lines = File.ReadAllLines("config/servers.conf");
+        string[] lines = File.ReadAllLines("Assets/essential/config/servers.conf");
         foreach (string s in lines)
         {
             serverT add = new serverT();
