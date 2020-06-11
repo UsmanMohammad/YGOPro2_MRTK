@@ -496,7 +496,7 @@ public static class TcpHelper
                     }
                     packagesInRecord.Insert(startI, Program.I().ocgcore.getNamePacket());
                     lastRecordName = UIHelper.getTimeString();
-                    FileStream stream = File.Create("replay/" + lastRecordName + ".yrp3d");
+                    FileStream stream = File.Create("Assets/essential/replay/" + lastRecordName + ".yrp3d");
                     BinaryWriter writer = new BinaryWriter(stream);
                     foreach (var item in packagesInRecord)
                     {

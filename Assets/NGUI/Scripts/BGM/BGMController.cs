@@ -17,7 +17,7 @@ public class BGMController : MonoBehaviour
     public void Start()
     {
         audioClips = new List<AudioClip>();
-        string[] bgms = System.IO.Directory.GetFiles(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/bgm/");
+        string[] bgms = System.IO.Directory.GetFiles(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/bgm/");
         foreach (string s in bgms)
         {
             if (System.IO.Path.GetExtension(s).ToLower() == ".mp3")
@@ -26,9 +26,9 @@ public class BGMController : MonoBehaviour
                 audioClips.Add(add);
             }
         }
-        advantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song-advantage.mp3");
-        disAdvantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song-disadvantage.mp3");
-        menuClip = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song.mp3");
+        advantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song-advantage.mp3");
+        disAdvantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song-disadvantage.mp3");
+        menuClip = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song.mp3");
         audioSource = gameObject.AddComponent<AudioSource>();
 #if UNITY_IOS
 		multiplier=0.08f;
@@ -97,7 +97,7 @@ public class BGMController : MonoBehaviour
 
     private IEnumerator LoadBGM()
     {
-        string soundPath = new System.Uri(new System.Uri("file:///"), Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song.ogg").ToString();
+        string soundPath = new System.Uri(new System.Uri("file:///"), Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song.ogg").ToString();
         WWW request = GetAudioFromFile(soundPath);
         yield return request;
         menuClip = request.GetAudioClip(true, true);

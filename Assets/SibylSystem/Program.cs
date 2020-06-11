@@ -214,15 +214,15 @@ public class Program : MonoBehaviour
                 }
             }
 
-            fileInfos = (new DirectoryInfo("cdb")).GetFiles().OrderByDescending(x => x.Name).ToArray();
+            fileInfos = (new DirectoryInfo("Assets/essential/cdb")).GetFiles().OrderByDescending(x => x.Name).ToArray();
             for (int i = 0; i < fileInfos.Length; i++)
             {
                 if (fileInfos[i].Name.Length > 4)
                 {
                     if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb")
                     {
-                        YGOSharp.CardsManager.initialize("cdb/" + fileInfos[i].Name);
-                        YGOSharp.CardsManager.initialize("cdb" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);//System Language
+                        YGOSharp.CardsManager.initialize("Assets/essential/cdb/" + fileInfos[i].Name);
+                        YGOSharp.CardsManager.initialize("Assets/essential/cdb" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);//System Language
                     }
                 }
             }
