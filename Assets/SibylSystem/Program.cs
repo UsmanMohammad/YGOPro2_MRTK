@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 public class Program : MonoBehaviour
 {
@@ -167,12 +168,12 @@ public class Program : MonoBehaviour
         });
         go(300, () =>
         {
-            Config.initialize("config/config.conf");
+            Config.initialize("Assets/essential/config/config.conf");
             localSha = new ShaCache();
             try
             {
-                UpdateClient("cdb/", cdbID);
-                UpdateClient("config/", configID);
+                UpdateClient("Assets/essential/cdb/", cdbID);
+                UpdateClient("Assets/essential/config/", configID);
             }
             catch
             {
@@ -180,17 +181,17 @@ public class Program : MonoBehaviour
                 // book.add("Auto Update Failed...\nCheck your network connection and relaunch the game...");
             }
 
-            InterString.initialize("config/translation.conf");
-            InterString.initialize("config" + AppLanguage.LanguageDir() + "/translation.conf");   //System Language
+            InterString.initialize("Assets/essential/config/translation.conf");
+            InterString.initialize("Assets/essential/config" + AppLanguage.LanguageDir() + "/translation.conf");   //System Language
             GameTextureManager.initialize();
-            GameStringManager.initialize("config/strings.conf");
-            if (File.Exists("config/strings.conf"))
-                GameStringManager.initialize("config/strings.conf");
+            GameStringManager.initialize("Assets/essential/config/strings.conf");
+            if (File.Exists("Assets/essential/config/strings.conf"))
+                GameStringManager.initialize("Assets/essential/config/strings.conf");
 
             if (File.Exists("expansions/strings.conf"))
                 GameStringManager.initialize("expansions/strings.conf");
 
-            YGOSharp.BanlistManager.initialize("config/lflist.conf");
+            YGOSharp.BanlistManager.initialize("Assets/essential/config/lflist.conf");
             if (File.Exists("expansions/lflist.conf"))
                 YGOSharp.BanlistManager.initialize("expansions/lflist.conf");
             FileInfo[] fileInfos;
@@ -214,29 +215,29 @@ public class Program : MonoBehaviour
                 }
             }
 
-            fileInfos = (new DirectoryInfo("cdb")).GetFiles().OrderByDescending(x => x.Name).ToArray();
+            fileInfos = (new DirectoryInfo("Assets/essential/cdb")).GetFiles().OrderByDescending(x => x.Name).ToArray();
             for (int i = 0; i < fileInfos.Length; i++)
             {
                 if (fileInfos[i].Name.Length > 4)
                 {
                     if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 4, 4) == ".cdb")
                     {
-                        YGOSharp.CardsManager.initialize("cdb/" + fileInfos[i].Name);
-                        YGOSharp.CardsManager.initialize("cdb" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);//System Language
+                        YGOSharp.CardsManager.initialize("Assets/essential/cdb/" + fileInfos[i].Name);
+                        YGOSharp.CardsManager.initialize("Assets/essential/cdb" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);//System Language
                     }
                 }
             }
 
-            fileInfos = (new DirectoryInfo("pack")).GetFiles();
-            fileInfos = (new DirectoryInfo("pack" + AppLanguage.LanguageDir())).GetFiles();
+            fileInfos = (new DirectoryInfo("Assets/essential/pack")).GetFiles();
+            fileInfos = (new DirectoryInfo("Assets/essential/pack" + AppLanguage.LanguageDir())).GetFiles();
             for (int i = 0; i < fileInfos.Length; i++)
             {
                 if (fileInfos[i].Name.Length > 3)
                 {
                     if (fileInfos[i].Name.Substring(fileInfos[i].Name.Length - 3, 3) == ".db")
                     {
-                        YGOSharp.PacksManager.initialize("pack/" + fileInfos[i].Name);
-                        YGOSharp.PacksManager.initialize("pack" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);
+                        YGOSharp.PacksManager.initialize("Assets/essential/pack/" + fileInfos[i].Name);
+                        YGOSharp.PacksManager.initialize("Assets/essential/pack" + AppLanguage.LanguageDir() + "/" + fileInfos[i].Name);
                     }
                 }
             }
@@ -455,9 +456,8 @@ public class Program : MonoBehaviour
             if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
                 throw new Exception("No Internet connection!");
         }
-        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-        serializer.MaxJsonLength = int.MaxValue;
-        return serializer.Deserialize<T>(request.text);
+
+        return JsonConvert.DeserializeObject<T>(request.text);
     }
 
     // returns a list of remote files in a recursive manner

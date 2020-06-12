@@ -24,17 +24,17 @@ public class ShaCache
 
     public ShaCache()
     {
-        if (!Directory.Exists("Update/"))
-            Directory.CreateDirectory("Update/");
-        if (!File.Exists("Update/SHACACHE.conf"))
-            File.Create("Update/SHACACHE.conf").Close();
+        if (!Directory.Exists("Assets/essential/Update/"))
+            Directory.CreateDirectory("Assets/essential/Update/");
+        if (!File.Exists("Assets/essential/Update/SHACACHE.conf"))
+            File.Create("Assets/essential/Update/SHACACHE.conf").Close();
         GetCache();
     }
 
     public void GetCache()
     {
         shas = new List<Sha>();
-        string[] localShas = File.ReadAllLines("Update/SHACACHE.conf");
+        string[] localShas = File.ReadAllLines("Assets/essential/Update/SHACACHE.conf");
         foreach (string str in localShas)
         {
             if (!str.Contains("->") && !str.Contains(","))
@@ -68,7 +68,7 @@ public class ShaCache
             shas.Add(newSHA);
             write += newSHA.ToString() + "\n";
         }
-        File.WriteAllText("Update/SHACACHE.conf", write);
+        File.WriteAllText("Assets/essential/Update/SHACACHE.conf", write);
     }
 
     public bool MatchesCache(string filePath, string SHA)

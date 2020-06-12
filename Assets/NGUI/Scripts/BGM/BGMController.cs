@@ -2,7 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NLayer;// Loads mp3 files
+using NLayer;
+using UnityEngine.Networking;
+
+// Loads mp3 files
 
 
 public class BGMController : MonoBehaviour
@@ -17,7 +20,7 @@ public class BGMController : MonoBehaviour
     public void Start()
     {
         audioClips = new List<AudioClip>();
-        string[] bgms = System.IO.Directory.GetFiles(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/bgm/");
+        string[] bgms = System.IO.Directory.GetFiles(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/bgm/");
         foreach (string s in bgms)
         {
             if (System.IO.Path.GetExtension(s).ToLower() == ".mp3")
@@ -26,9 +29,9 @@ public class BGMController : MonoBehaviour
                 audioClips.Add(add);
             }
         }
-        advantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song-advantage.mp3");
-        disAdvantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song-disadvantage.mp3");
-        menuClip = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song.mp3");
+        advantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song-advantage.mp3");
+        disAdvantage = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song-disadvantage.mp3");
+        menuClip = Mp3Loader.LoadMp3(Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song.mp3");
         audioSource = gameObject.AddComponent<AudioSource>();
 #if UNITY_IOS
 		multiplier=0.08f;
@@ -97,10 +100,11 @@ public class BGMController : MonoBehaviour
 
     private IEnumerator LoadBGM()
     {
-        string soundPath = new System.Uri(new System.Uri("file:///"), Environment.CurrentDirectory.Replace("\\", "/") + "/" + "sound/song.ogg").ToString();
-        WWW request = GetAudioFromFile(soundPath);
-        yield return request;
-        menuClip = request.GetAudioClip(true, true);
+        string soundPath = new System.Uri(new System.Uri("file:///"), Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song.ogg").ToString();
+        UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(soundPath, AudioType.OGGVORBIS);
+        yield return request.SendWebRequest();
+        
+        menuClip = DownloadHandlerAudioClip.GetContent(request);
         menuClip.name = System.IO.Path.GetFileName(soundPath);
         PlayAudioFile(0);
     }
@@ -129,12 +133,6 @@ public class BGMController : MonoBehaviour
         }
         audioSource.loop = true;
         audioSource.Play();
-    }
-
-    private WWW GetAudioFromFile(string pathToFile)
-    {
-        WWW request = new WWW(pathToFile);
-        return request;
     }
 
 }

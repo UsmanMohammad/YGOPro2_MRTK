@@ -617,11 +617,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: ygofroge
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: C:\Git\YGOPro2_MRTK\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: YGOPro2
+  metroCertificateIssuer: YGOPro2
+  metroCertificateNotAfter: 80517c05e25fd701
   metroApplicationDescription: ygofroge
   wsaImages: {}
   metroTileShortName: 

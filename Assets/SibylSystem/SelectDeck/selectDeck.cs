@@ -77,7 +77,7 @@ public class selectDeck : WindowServantSP
 
     public void KF_editDeck(string deckName)
     {
-        string path = "deck/" + deckName + ".ydk";
+        string path = "Assets/essential/deck/" + deckName + ".ydk";
         if (File.Exists(path))
         {
             Config.Set("deckInUse", deckName);
@@ -128,7 +128,7 @@ public class selectDeck : WindowServantSP
         {
             try
             {
-                File.Create("deck/" + result[0].value + ".ydk").Close();
+                File.Create("Assets/essential/deck/" + result[0].value + ".ydk").Close();
                 RMSshow_none(InterString.Get("「[?]」创建完毕。", result[0].value));
                 superScrollView.selectedString = result[0].value;
                 printFile();
@@ -144,7 +144,7 @@ public class selectDeck : WindowServantSP
             {
                 try
                 {
-                    File.Delete("deck/" + superScrollView.selectedString + ".ydk");
+                    File.Delete("Assets/essential/deck/" + superScrollView.selectedString + ".ydk");
                     RMSshow_none(InterString.Get("「[?]」删除完毕。", superScrollView.selectedString));
                     printFile();
                 }
@@ -158,7 +158,7 @@ public class selectDeck : WindowServantSP
         {
             try
             {
-                File.Copy("deck/" + superScrollView.selectedString + ".ydk", "deck/" + result[0].value + ".ydk");
+                File.Copy("Assets/essential/deck/" + superScrollView.selectedString + ".ydk", "Assets/essential/deck/" + result[0].value + ".ydk");
                 RMSshow_none(InterString.Get("「[?]」复制完毕。", superScrollView.selectedString));
                 superScrollView.selectedString = result[0].value;
                 printFile();
@@ -172,7 +172,7 @@ public class selectDeck : WindowServantSP
         {
             try
             {
-                File.Move("deck/" + superScrollView.selectedString + ".ydk", "deck/" + result[0].value + ".ydk");
+                File.Move("Assets/essential/deck/" + superScrollView.selectedString + ".ydk", "Assets/essential/deck/" + result[0].value + ".ydk");
                 RMSshow_none(InterString.Get("「[?]」重命名完毕。", superScrollView.selectedString));
                 superScrollView.selectedString = result[0].value;
                 printFile();
@@ -209,7 +209,7 @@ public class selectDeck : WindowServantSP
                     {
                         value += deck.Side[i].ToString() + "\r\n";
                     }
-                    System.IO.File.WriteAllText("deck/" + superScrollView.selectedString + ".ydk", value, System.Text.Encoding.UTF8);
+                    System.IO.File.WriteAllText("Assets/essential/deck/" + superScrollView.selectedString + ".ydk", value, System.Text.Encoding.UTF8);
                     printSelected();
                     RMSshow_none(InterString.Get("卡组代码加载成功。"));
                 }
@@ -232,7 +232,7 @@ public class selectDeck : WindowServantSP
         {
             return;
         }
-        string path = "deck/" + superScrollView.selectedString + ".ydk";
+        string path = "Assets/essential/deck/" + superScrollView.selectedString + ".ydk";
         if (File.Exists(path))
         {
             RMSshow_yesOrNo(
@@ -250,13 +250,13 @@ public class selectDeck : WindowServantSP
         {
             return;
         }
-        string path = "deck/" + superScrollView.selectedString + ".ydk";
+        string path = "Assets/essential/deck/" + superScrollView.selectedString + ".ydk";
         if (File.Exists(path))
         {
             string newname = InterString.Get("[?]的副本", superScrollView.selectedString);
             string newnamer = newname;
             int i = 1;
-            while (File.Exists("deck/" + newnamer + ".ydk"))
+            while (File.Exists("Assets/essential/deck/" + newnamer + ".ydk"))
             {
                 newnamer = newname + i.ToString();
                 i++;
@@ -271,7 +271,7 @@ public class selectDeck : WindowServantSP
         {
             return;
         }
-        string path = "deck/" + superScrollView.selectedString + ".ydk";
+        string path = "Assets/essential/deck/" + superScrollView.selectedString + ".ydk";
         if (File.Exists(path))
         {
             RMSshow_input("onRename", InterString.Get("新的卡组名"), superScrollView.selectedString);
@@ -284,7 +284,7 @@ public class selectDeck : WindowServantSP
         {
             return;
         }
-        string path = "deck/" + superScrollView.selectedString + ".ydk";
+        string path = "Assets/essential/deck/" + superScrollView.selectedString + ".ydk";
         if (File.Exists(path))
         {
             YGOSharp.Deck deck;
@@ -340,7 +340,7 @@ public class selectDeck : WindowServantSP
     {
         GameTextureManager.clearUnloaded();
         YGOSharp.Deck deck;
-        DeckManager.FromYDKtoCodedDeck("deck/" + deckSelected + ".ydk", out deck);
+        DeckManager.FromYDKtoCodedDeck("Assets/essential/deck/" + deckSelected + ".ydk", out deck);
         int mainAll = 0;
         int mainMonster = 0;
         int mainSpell = 0;
@@ -534,7 +534,7 @@ public class selectDeck : WindowServantSP
     {
         string deckInUse = Config.Get("deckInUse", "miaowu");
         superScrollView.clear();
-        FileInfo[] fileInfos = (new DirectoryInfo("deck")).GetFiles();
+        FileInfo[] fileInfos = (new DirectoryInfo("Assets/essential/deck")).GetFiles();
         if (Config.Get(sort, "1") == "1")
         {
             Array.Sort(fileInfos, UIHelper.CompareTime);

@@ -787,7 +787,7 @@ public static class UIHelper
     {
         try
         {
-            FileInfo[] fileInfos = (new DirectoryInfo("texture/face")).GetFiles();
+            FileInfo[] fileInfos = (new DirectoryInfo("Assets/essential/texture/face")).GetFiles();
             for (int i = 0; i < fileInfos.Length; i++)
             {
                 if (fileInfos[i].Name.Length > 4)
@@ -799,7 +799,7 @@ public static class UIHelper
                         {
                             try
                             {
-                                faces.Add(name, UIHelper.getTexture2D("texture/face/" + fileInfos[i].Name));
+                                faces.Add(name, UIHelper.getTexture2D("Assets/essential/texture/face/" + fileInfos[i].Name));
                             }
                             catch (Exception e)
                             {
@@ -830,10 +830,10 @@ public static class UIHelper
         if (name.Length > 0 && !(Application.internetReachability == NetworkReachability.NotReachable) && Program.I().setting.autoPicDownload)
         {
             HttpDldFile httpDldFile = new HttpDldFile();
-            httpDldFile.Download("https://raw.githubusercontent.com/szefo09/face/master/" + name + ".png", "texture/face/" + name + ".png");
-            if (File.Exists("texture/face/" + name + ".png"))
+            httpDldFile.Download("https://raw.githubusercontent.com/szefo09/face/master/" + name + ".png", "Assets/essential/texture/face/" + name + ".png");
+            if (File.Exists("Assets/essential/texture/face/" + name + ".png"))
             {
-                Texture2D face = UIHelper.getTexture2D("texture/face/" + name + ".png");
+                Texture2D face = UIHelper.getTexture2D("Assets/essential/texture/face/" + name + ".png");
                 faces.Add(name, face);
                 return face;
             }
@@ -1013,14 +1013,14 @@ public static class UIHelper
         {
             return;
         }
-        string path = "sound/" + p + ".mp3";
+        string path = "Assets/essential/sound/" + p + ".mp3";
         if (File.Exists(path) == false)
         {
-            path = "sound/" + p + ".wav";
+            path = "Assets/essential/sound/" + p + ".wav";
         }
         if (File.Exists(path) == false)
         {
-            path = "sound/" + p + ".ogg";
+            path = "Assets/essential/sound/" + p + ".ogg";
         }
         if (File.Exists(path) == false)
         {

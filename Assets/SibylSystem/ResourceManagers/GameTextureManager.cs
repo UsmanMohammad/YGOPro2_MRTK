@@ -301,18 +301,18 @@ public class GameTextureManager
         }
         else
         {
-            string path = "picture/card/" + pic.code.ToString() + ".jpg";
+            string path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
             if (!File.Exists(path))
             {
-                path = "picture/card/" + pic.code.ToString() + ".png";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
             }
             if (!File.Exists(path))
             {
-                path = "expansions/pics/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/expansions/pics/" + pic.code.ToString() + ".jpg";
             }
             if (!File.Exists(path))
             {
-                path = "pics/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/pics/" + pic.code.ToString() + ".jpg";
             }
             if (!File.Exists(path))
             {
@@ -320,13 +320,13 @@ public class GameTextureManager
                 {
                     while (_basicBackgroundWorkerCardDownload.QueueCount > 1)
                     {
-                        if (File.Exists("picture/card/" + pic.code.ToString() + ".jpg"))
+                        if (File.Exists("Assets/essential/picture/card/" + pic.code.ToString() + ".jpg"))
                         {
-                            LoadCloseupFromCardPicture(pic, "picture/card/" + pic.code.ToString() + ".jpg", false);
+                            LoadCloseupFromCardPicture(pic, "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg", false);
                             return;
                         }
                     }
-                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg", pic, true);
+                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg", pic, true);
                 });
             }
             else
@@ -347,9 +347,9 @@ public class GameTextureManager
     {
         try
         {
-            if (File.Exists("picture/closeup/" + pic.code.ToString() + ".png"))
+            if (File.Exists("Assets/essential/picture/closeup/" + pic.code.ToString() + ".png"))
             {
-                string path = "picture/closeup/" + pic.code.ToString() + ".png";
+                string path = "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png";
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN //编译器、Windows
                 BitmapHelper bitmap = new BitmapHelper(path);
                 int left;
@@ -403,18 +403,18 @@ public class GameTextureManager
             }
             else
             {
-                string path = "picture/card/" + pic.code.ToString() + ".jpg";
+                string path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 if (!File.Exists(path))
                 {
-                    path = "picture/card/" + pic.code.ToString() + ".png";
+                    path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
                 }
                 if (!File.Exists(path))
                 {
-                    path = "expansions/pics/" + pic.code.ToString() + ".jpg";
+                    path = "Assets/essential/expansions/pics/" + pic.code.ToString() + ".jpg";
                 }
                 if (!File.Exists(path))
                 {
-                    path = "pics/" + pic.code.ToString() + ".jpg";
+                    path = "Assets/essential/pics/" + pic.code.ToString() + ".jpg";
                 }
                 if (!File.Exists(path))
                 {
@@ -670,28 +670,28 @@ public class GameTextureManager
     {
         try
         {
-            string path = "picture/closeup/" + pic.code.ToString() + ".png";
+            string path = "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png";
 #if UNITY_ANDROID || UNITY_IOS //Android、iPhone
             if (!File.Exists(path) && AutoPicDownload && Program.I().setting.pictureDownloadVersion.value!="Series 10 HQ")
             {
-                df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "picture/closeup/" + pic.code.ToString() + ".png");
+                df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png");
             }
 #endif
             if (!File.Exists(path) && AutoPicDownload)
             {
                 _basicBackgroundWorkerCloseupDownload.EnqueueWork(() =>
                 {
-                    df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "picture/closeup/" + pic.code.ToString() + ".png", pic, false);
+                    df.Download("http://duelistsunite.org/pictures/closeup/" + pic.code.ToString() + ".png", "Assets/essential/picture/closeup/" + pic.code.ToString() + ".png", pic, false);
                 });
                 return;
             }
             if (!File.Exists(path))
             {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN //编译器、Windows
-                path = "picture/card/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 if (!File.Exists(path))
                 {
-                    path = "picture/card/" + pic.code.ToString() + ".png";
+                    path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
                 }
                 bool Iam8 = false;
                 //if (!File.Exists(path))
@@ -719,7 +719,7 @@ public class GameTextureManager
 #elif UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX //Android、iPhone
             if (!File.Exists(path))
             {
-                path = "picture/null.png";
+                path = "Assets/essential/picture/null.png";
             }
 
             byte[] data;
@@ -753,7 +753,7 @@ public class GameTextureManager
         {
             if (!File.Exists(path))
             {
-                path = "picture/null.png";
+                path = "Assets/essential/picture/null.png";
             }
             pic.hashed_data = getCuttedPic(path, pic.pCard, Iam8);
             softVtype(pic, 0.5f);
@@ -906,26 +906,26 @@ public class GameTextureManager
     {
         try
         {
-            string path = "picture/card/" + pic.code.ToString() + ".jpg";
+            string path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
             if (!File.Exists(path))
             {
-                path = "picture/card/" + pic.code.ToString() + ".png";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".png";
             }
             if (!File.Exists(path))
             {
-                path = "expansions/pics/" + pic.code.ToString() + ".png";
+                path = "Assets/essential/expansions/pics/" + pic.code.ToString() + ".png";
             }
             if (!File.Exists(path))
             {
-                path = "expansions/pics/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/expansions/pics/" + pic.code.ToString() + ".jpg";
             }
             if (!File.Exists(path))
             {
-                path = "pics/" + pic.code.ToString() + ".png";
+                path = "Assets/essential/pics/" + pic.code.ToString() + ".png";
             }
             if (!File.Exists(path))
             {
-                path = "pics/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/pics/" + pic.code.ToString() + ".jpg";
             }
             //if (!File.Exists(path) && pic.code != 0)
             //{
@@ -940,29 +940,29 @@ public class GameTextureManager
                 {
                     case "Series 10":
                         {
-                            path = "picture/card/" + pic.code.ToString() + ".jpg";
+                            path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                             if (!File.Exists(path))
                             {
-                                path = "picture/card/" + pic.code.ToString() + ".jpg";
+                                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                                 if (AutoPicDownload && !File.Exists(path))
                                 {
-                                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg");
+                                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg");
                                 }
                             }
                             break;
                         }
                     case "Anime":
                         {
-                            path = "picture/card-ani/" + pic.code.ToString() + ".jpg";
+                            path = "Assets/essential/picture/card-ani/" + pic.code.ToString() + ".jpg";
                             if (AutoPicDownload && !File.Exists(path))
                             {
-                                df.Download("http://duelistsunite.org/picture/card-ani/" + pic.code.ToString() + ".jpg", "picture/card-ani/" + pic.code.ToString() + ".jpg");
+                                df.Download("http://duelistsunite.org/picture/card-ani/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card-ani/" + pic.code.ToString() + ".jpg");
                                 if (!File.Exists(path))
                                 {
-                                    path = "picture/card/" + pic.code.ToString() + ".jpg";
+                                    path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                                     if (!File.Exists(path))
                                     {
-                                        df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg");
+                                        df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg");
                                     }
                                 }
                             }
@@ -971,10 +971,10 @@ public class GameTextureManager
                         }
                     case "Series 10 HQ":
                         {
-                            path = "picture/card/" + pic.code.ToString() + ".jpg";
+                            path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                             if (!File.Exists(path) && pic.code != 0 && AutoPicDownload)
                             {
-                                df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg");
+                                df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg");
                             }
                             break;
                         }
@@ -986,20 +986,20 @@ public class GameTextureManager
             }
             else
             {
-                path = "picture/card/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 if (AutoPicDownload && !File.Exists(path))
                 {
-                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg");
-                    path = "picture/card/" + pic.code.ToString() + ".jpg";
+                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg");
+                    path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 }
             }
 
             if (!File.Exists(path) && pic.code != 0 && AutoPicDownload)
             {
-                path = "picture/card/" + pic.code.ToString() + ".jpg";
+                path = "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg";
                 if (!File.Exists(path))
                 {
-                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg");
+                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg");
                 }
             }
 #endif
@@ -1007,7 +1007,7 @@ public class GameTextureManager
             {
                 _basicBackgroundWorkerCardDownload.EnqueueWork(() =>
                 {
-                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "picture/card/" + pic.code.ToString() + ".jpg", pic, false);
+                    df.Download("http://duelistsunite.org/pictures/cards/" + pic.code.ToString() + ".jpg", "Assets/essential/picture/card/" + pic.code.ToString() + ".jpg", pic, false);
 
                 });
                 return;
@@ -1154,7 +1154,7 @@ public class GameTextureManager
         if (uiLoaded == false)
         {
             uiLoaded = true;
-            FileInfo[] fileInfos = (new DirectoryInfo("texture/ui")).GetFiles();
+            FileInfo[] fileInfos = (new DirectoryInfo("Assets/essential/texture/ui")).GetFiles();
             for (int i = 0; i < fileInfos.Length; i++)
             {
                 if (fileInfos[i].Name.Length > 4)
@@ -1163,7 +1163,7 @@ public class GameTextureManager
                     {
                         UIPictureResource r = new UIPictureResource();
                         r.name = fileInfos[i].Name.Substring(0, fileInfos[i].Name.Length - 4);
-                        r.data = UIHelper.getTexture2D("texture/ui/" + fileInfos[i].Name);
+                        r.data = UIHelper.getTexture2D("Assets/essential/texture/ui/" + fileInfos[i].Name);
                         allUI.Add(r);
                     }
                 }
@@ -1188,35 +1188,35 @@ public class GameTextureManager
 
     internal static void initialize()
     {
-        attack = UIHelper.getTexture2D("texture/duel/attack.png");
-        myBack = UIHelper.getTexture2D("texture/duel/me.jpg");
-        opBack = UIHelper.getTexture2D("texture/duel/opponent.jpg");
-        unknown = UIHelper.getTexture2D("texture/duel/unknown.jpg");
-        negated = UIHelper.getTexture2D("texture/duel/negated.png");
-        bar = UIHelper.getTexture2D("texture/duel/healthBar/bg.png");
-        exBar = UIHelper.getTexture2D("texture/duel/healthBar/excited.png");
-        time = UIHelper.getTexture2D("texture/duel/healthBar/t.png");
-        lp = UIHelper.getTexture2D("texture/duel/healthBar/lp.png");
-        L = UIHelper.getTexture2D("texture/duel/L.png");
-        R = UIHelper.getTexture2D("texture/duel/R.png");
-        LINK = UIHelper.getTexture2D("texture/duel/link.png");
-        LINKm = UIHelper.getTexture2D("texture/duel/linkMask.png");
-        Chain = UIHelper.getTexture2D("texture/duel/chain.png");
-        Mask = UIHelper.getTexture2D("texture/duel/mask.png");
+        attack = UIHelper.getTexture2D("Assets/essential/texture/duel/attack.png");
+        myBack = UIHelper.getTexture2D("Assets/essential/texture/duel/me.jpg");
+        opBack = UIHelper.getTexture2D("Assets/essential/texture/duel/opponent.jpg");
+        unknown = UIHelper.getTexture2D("Assets/essential/texture/duel/unknown.jpg");
+        negated = UIHelper.getTexture2D("Assets/essential/texture/duel/negated.png");
+        bar = UIHelper.getTexture2D("Assets/essential/texture/duel/healthBar/bg.png");
+        exBar = UIHelper.getTexture2D("Assets/essential/texture/duel/healthBar/excited.png");
+        time = UIHelper.getTexture2D("Assets/essential/texture/duel/healthBar/t.png");
+        lp = UIHelper.getTexture2D("Assets/essential/texture/duel/healthBar/lp.png");
+        L = UIHelper.getTexture2D("Assets/essential/texture/duel/L.png");
+        R = UIHelper.getTexture2D("Assets/essential/texture/duel/R.png");
+        LINK = UIHelper.getTexture2D("Assets/essential/texture/duel/link.png");
+        LINKm = UIHelper.getTexture2D("Assets/essential/texture/duel/linkMask.png");
+        Chain = UIHelper.getTexture2D("Assets/essential/texture/duel/chain.png");
+        Mask = UIHelper.getTexture2D("Assets/essential/texture/duel/mask.png");
 
 
-        nt = UIHelper.getTexture2D("texture/duel/phase/nt.png");
-        bp = UIHelper.getTexture2D("texture/duel/phase/bp.png");
-        ep = UIHelper.getTexture2D("texture/duel/phase/ep.png");
-        mp1 = UIHelper.getTexture2D("texture/duel/phase/mp1.png");
-        mp2 = UIHelper.getTexture2D("texture/duel/phase/mp2.png");
-        dp = UIHelper.getTexture2D("texture/duel/phase/dp.png");
-        sp = UIHelper.getTexture2D("texture/duel/phase/sp.png");
+        nt = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/nt.png");
+        bp = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/bp.png");
+        ep = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/ep.png");
+        mp1 = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/mp1.png");
+        mp2 = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/mp2.png");
+        dp = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/dp.png");
+        sp = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/sp.png");
 
-        phase = UIHelper.getTexture2D("texture/duel/phase/phase.png");
+        phase = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/phase.png");
 
-        rs = UIHelper.getTexture2D("texture/duel/phase/rs.png");
-        ts = UIHelper.getTexture2D("texture/duel/phase/ts.png");
+        rs = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/rs.png");
+        ts = UIHelper.getTexture2D("Assets/essential/texture/duel/phase/ts.png");
 
         N = new Texture2D(10, 10);
         for (int i = 0; i < 10; i++)
@@ -1229,7 +1229,7 @@ public class GameTextureManager
         N.Apply();
         try
         {
-            ColorUtility.TryParseHtmlString(File.ReadAllText("texture/duel/chainColor.txt"), out chainColor);
+            ColorUtility.TryParseHtmlString(File.ReadAllText("Assets/essential/texture/duel/chainColor.txt"), out chainColor);
         }
         catch (Exception)
         {

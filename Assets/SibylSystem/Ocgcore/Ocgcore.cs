@@ -2739,16 +2739,16 @@ public class Ocgcore : ServantWithCardDescription
         {
             try
             {
-                if (File.Exists("replay/" + TcpHelper.lastRecordName + ".yrp3d"))
+                if (File.Exists("Assets/essential/replay/" + TcpHelper.lastRecordName + ".yrp3d"))
                 {
                     if (TcpHelper.lastRecordName != winCaculator.input.value)
                     {
-                        if (File.Exists("replay/" + winCaculator.input.value + ".yrp3d"))
+                        if (File.Exists("Assets/essential/replay/" + winCaculator.input.value + ".yrp3d"))
                         {
-                            File.Delete("replay/" + winCaculator.input.value + ".yrp3d");
+                            File.Delete("Assets/essential/replay/" + winCaculator.input.value + ".yrp3d");
                         }
                     }
-                    File.Move("replay/" + TcpHelper.lastRecordName + ".yrp3d", "replay/" + winCaculator.input.value + ".yrp3d");
+                    File.Move("Assets/essential/replay/" + TcpHelper.lastRecordName + ".yrp3d", "Assets/essential/replay/" + winCaculator.input.value + ".yrp3d");
                 }
             }
             catch (Exception e)
@@ -2765,13 +2765,13 @@ public class Ocgcore : ServantWithCardDescription
         {
             try
             {
-                if (File.Exists("replay/" + TcpHelper.lastRecordName + ".yrp3d"))
+                if (File.Exists("Assets/essential/replay/" + TcpHelper.lastRecordName + ".yrp3d"))
                 {
-                    if (File.Exists("replay/" + "-lastReplay" + ".yrp3d"))
+                    if (File.Exists("Assets/essential/replay/" + "-lastReplay" + ".yrp3d"))
                     {
-                        File.Delete("replay/" + "-lastReplay" + ".yrp3d");
+                        File.Delete("Assets/essential/replay/" + "-lastReplay" + ".yrp3d");
                     }
-                    File.Move("replay/" + TcpHelper.lastRecordName + ".yrp3d", "replay/-lastReplay.yrp3d");
+                    File.Move("Assets/essential/replay/" + TcpHelper.lastRecordName + ".yrp3d", "Assets/essential/replay/-lastReplay.yrp3d");
                 }
             }
             catch (Exception e)
