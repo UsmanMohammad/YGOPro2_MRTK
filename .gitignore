@@ -57,6 +57,7 @@ AI_core_vs2017solution/.vs
 /Assets/SibylSystem/ResourceManagers/RepoData.cs
 /Assets/NugetPackages
 /Assets/essential/*
+!/Assets/essential/replay
 /Packages
 /picture
 /sound
