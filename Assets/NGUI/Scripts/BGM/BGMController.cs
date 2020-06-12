@@ -2,7 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NLayer;// Loads mp3 files
+using NLayer;
+using UnityEngine.Networking;
+
+// Loads mp3 files
 
 
 public class BGMController : MonoBehaviour
@@ -98,9 +101,10 @@ public class BGMController : MonoBehaviour
     private IEnumerator LoadBGM()
     {
         string soundPath = new System.Uri(new System.Uri("file:///"), Environment.CurrentDirectory.Replace("\\", "/") + "/" + "Assets/essential/sound/song.ogg").ToString();
-        WWW request = GetAudioFromFile(soundPath);
-        yield return request;
-        menuClip = request.GetAudioClip(true, true);
+        UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(soundPath, AudioType.OGGVORBIS);
+        yield return request.SendWebRequest();
+        
+        menuClip = DownloadHandlerAudioClip.GetContent(request);
         menuClip.name = System.IO.Path.GetFileName(soundPath);
         PlayAudioFile(0);
     }
@@ -129,12 +133,6 @@ public class BGMController : MonoBehaviour
         }
         audioSource.loop = true;
         audioSource.Play();
-    }
-
-    private WWW GetAudioFromFile(string pathToFile)
-    {
-        WWW request = new WWW(pathToFile);
-        return request;
     }
 
 }

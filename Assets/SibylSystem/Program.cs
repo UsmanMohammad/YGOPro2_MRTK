@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 public class Program : MonoBehaviour
 {
@@ -455,9 +456,8 @@ public class Program : MonoBehaviour
             if (Application.internetReachability == NetworkReachability.NotReachable || !string.IsNullOrEmpty(request.error))
                 throw new Exception("No Internet connection!");
         }
-        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-        serializer.MaxJsonLength = int.MaxValue;
-        return serializer.Deserialize<T>(request.text);
+
+        return JsonConvert.DeserializeObject<T>(request.text);
     }
 
     // returns a list of remote files in a recursive manner
