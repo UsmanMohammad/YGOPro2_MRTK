@@ -202,7 +202,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 206889187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1578b9753d2604f98d608cb4239e2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: The Ultimate Text Solution for Unity
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 206889187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b34fc186f40e8043b977d4fa70db8c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d40088a6124c578ad6b428df586e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_pivot: {x: 0.5, y: 0.5}
@@ -378,11 +378,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 420529823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1578b9753d2604f98d608cb4239e2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: <size=+12>T</size>ext<size=+12>M</size>esh<sup> <#50aaff>PRO!</color></sup>
-  m_fontAsset: {fileID: 11400000, guid: 808aa8f1ab804104aa7d0c337a6c1481, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontStyle: 0
   m_isOverlay: 0
   m_fontColor32:
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_pageToDisplay: 0
   m_fontAssetArray:
-  - {fileID: 11400000, guid: 808aa8f1ab804104aa7d0c337a6c1481, type: 2}
+  - {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -475,7 +475,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4fb51aa7001a2244395ddf6a15d37389, type: 2}
+  - {fileID: 2100000, guid: f4e195ac1e204eff960149d1cb34e18c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 420529823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b34fc186f40e8043b977d4fa70db8c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d40088a6124c578ad6b428df586e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_pivot: {x: 0.5, y: 0.5}
@@ -818,7 +818,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 504ae362e57fc464b847f1e9fd0e4035, type: 2}
+  - {fileID: 2100000, guid: c719e38f25a9480abd2480ab621a2949, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

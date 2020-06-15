@@ -182,7 +182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 955542821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1578b9753d2604f98d608cb4239e2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: '<align=center><size=%130><#40f0ff>Text Alignment</color></size></align>
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 955542821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b34fc186f40e8043b977d4fa70db8c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d40088a6124c578ad6b428df586e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_pivot: {x: .5, y: .5}
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063675289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496f2e385b0c62542b5c739ccfafd8da, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: '<align=center><size=%130><#80f0ff>Text Alignment</color></size></align>
